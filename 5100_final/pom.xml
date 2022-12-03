@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com</groupId>
-    <artifactId>fp_1</artifactId>
+    <groupId>com.mycompany</groupId>
+    <artifactId>5100_final</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <modules>
-        <module>5100_final</module>
-    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <exec.mainClass>com.fp_1.Fp_1</exec.mainClass>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
+        <exec.mainClass>com.mycompany._final.App</exec.mainClass>
     </properties>
 </project>
