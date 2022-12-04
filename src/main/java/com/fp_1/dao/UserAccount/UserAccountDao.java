@@ -18,10 +18,14 @@ import java.util.List;
 public class UserAccountDao {
     ConnectDB util = new ConnectDB();
     public boolean add(UserAccount useraccount) {
-        return util.update("insert into UserAccount(UserName,UserPassword,UserIdentity) values(?,?,?)",
+        return util.update("insert into UserAccount(RealName,Email,Phone,UserName,UserPassword,UserIdentity) values(?,?,?,?,?,?)",
+                useraccount.getRealName(),
+                useraccount.getEmail(),
+                useraccount.getPhone(),
                 useraccount.getUserName(),
                 useraccount.getUserPassword(), 
-                useraccount.getUserIdentity()) > 0;
+                useraccount.getUserIdentity()
+                     ) > 0;
     }
     
     public UserAccount QueryById(String username) {
@@ -53,6 +57,9 @@ public class UserAccountDao {
             if (rs.next()) {
                 
                 useraccount = new UserAccount();
+                useraccount.setRealName(rs.getString("RealName"));
+                useraccount.setEmail(rs.getString("Email"));
+                useraccount.setPhone(rs.getString("Phone"));
                 useraccount.setUserName(rs.getString("UserName"));
                 useraccount.setUserPassword(rs.getString("UserPassword"));
                 useraccount.setUserIdentity(rs.getString("UserIdentity"));
@@ -76,6 +83,9 @@ public class UserAccountDao {
                 useraccount.setUserName(rs.getString("UserName"));
                 useraccount.setUserPassword(rs.getString("UserPassword"));
                 useraccount.setUserIdentity(rs.getString("UserIdentity"));
+                useraccount.setRealName(rs.getString("RealName"));
+                useraccount.setEmail(rs.getString("Email"));
+                useraccount.setPhone(rs.getString("Phone"));
                 _listuseraccount.add(useraccount);
             }
         } catch (SQLException e) {
