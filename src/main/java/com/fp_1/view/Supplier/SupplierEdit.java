@@ -32,9 +32,11 @@ public class SupplierEdit extends javax.swing.JFrame {
     PreparedStatement pst=null;
     ResultSet rs=null;
     int i,thisNum,delNum;
+    boolean isAed;
     
     public void updateDB() throws ClassNotFoundException, SQLException{
-    
+
+        
         try
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -61,6 +63,7 @@ public class SupplierEdit extends javax.swing.JFrame {
                     columnData.add(rs.getString("ShipmentFee"));
                     columnData.add(rs.getString("OrderDate"));
                     columnData.add(rs.getString("TimeSpand"));
+                    columnData.add(rs.getString("IsArrived"));
                     //columnData.add(rs.getString("IsArrived"));
                 }
                 RecordTable.addRow(columnData);
@@ -439,12 +442,13 @@ public class SupplierEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void newBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBtnActionPerformed
+        isAed = checkArrived.isSelected();
         try
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
             sqlConn=DriverManager.getConnection(dataConn,username,password);
             pst=sqlConn.prepareStatement("INSERT INTO connector(MaterialName, Origin, Weight, UnitPrice, ShipmentFee, OrderDate, "
-                    + "TimeSpand) VALUES (?,?,?,?,?,?,?)");
+                    + "TimeSpand,IsArrived) VALUES (?,?,?,?,?,?,?,?)");
             
             pst.setString(1,txtName.getText());
             pst.setString(2,txtOrigin.getText());
@@ -454,6 +458,12 @@ public class SupplierEdit extends javax.swing.JFrame {
             pst.setString(6,txtDate.getText());
             pst.setString(7,txtSpand.getText());
             
+            if (isAed){
+            pst.setString(8, "1");
+            }
+            else{
+                pst.setString(8, "0");
+            }
             pst.executeUpdate();
             
         txtDate.setText("");
@@ -481,16 +491,20 @@ public class SupplierEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_newBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        
+        
         DefaultTableModel jModel=(DefaultTableModel)jTable1.getModel();
         int slctRow=jTable1.getSelectedRow();
         
         try
         {
+            isAed = checkArrived.isSelected();
             thisNum=Integer.parseInt(jModel.getValueAt(slctRow, 0).toString());
             Class.forName("com.mysql.cj.jdbc.Driver");
             sqlConn=DriverManager.getConnection(dataConn,username,password);
+            
             pst=sqlConn.prepareStatement("update connector set MaterialName =?,Origin =?,Weight =?,UnitPrice =?,ShipmentFee =?,"
-                    + "OrderDate =?,TimeSpand =? where OrderNumber =?");
+                    + "OrderDate =?,TimeSpand =? IsArrived =? where OrderNumber =?");
             
             pst.setString(1,txtName.getText());
             pst.setString(2,txtOrigin.getText());
@@ -499,7 +513,15 @@ public class SupplierEdit extends javax.swing.JFrame {
             pst.setString(5,txtFee.getText());
             pst.setString(6,txtDate.getText());
             pst.setString(7,txtSpand.getText());
-            pst.setInt(8, thisNum);
+            
+            if (isAed){
+            pst.setString(8, "1");
+            }
+            else{
+                pst.setString(8, "0");
+            }
+            
+            pst.setInt(9, thisNum);
             pst.executeUpdate();// Use set to set the '?' as parameters in the declaration 
             
         txtDate.setText("");
