@@ -11,7 +11,16 @@ package com.fp_1.model.MaterialPurchasing;
 public class StorageMaterial {
     String materialName;
     Double weight;
-    Double RealUnitPrice;
+    Double UnitPrice;
+    Double TotalPrice;
+
+    public Double getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(Double TotalPrice) {
+        this.TotalPrice = TotalPrice;
+    }
 
     public String getMaterialName() {
         return materialName;
@@ -29,13 +38,14 @@ public class StorageMaterial {
         this.weight = weight;
     }
 
-    public Double getRealUnitPrice() {
-        return RealUnitPrice;
+    public Double getUnitPrice() {
+        return UnitPrice;
     }
 
-    public void setRealUnitPrice(Double RealUnitPrice) {
-        this.RealUnitPrice = RealUnitPrice;
+    public void setUnitPrice(Double UnitPrice) {
+        this.UnitPrice = UnitPrice;
     }
-    
+
+
     
 }

@@ -33,6 +33,11 @@ public class MaterialPurchasing extends javax.swing.JFrame {
     Connection sqlConn=null;
     PreparedStatement pst=null;
     ResultSet rs=null;
+    
+    Connection sqlConnSM=null;
+    PreparedStatement pstSM=null;
+    ResultSet rsSM=null;
+    
     int i,thisNum,delNum;
     boolean isAed;
     
