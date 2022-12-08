@@ -5,6 +5,7 @@
 package com.fp_1.view.PartProducingFrame;
 
 import com.fp_1.model.MaterialPurchasing.StorageMaterial;
+import com.fp_1.view.MaterialPurchasing.MaterialPurchasing;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,9 +58,18 @@ public class PartProducingFrame extends javax.swing.JFrame {
         //if(SMList.isEmpty()){JOptionPane.showMessageDialog(this, username);}
     }
 
+    public void displayBox()
+    {
+        
+    }
     public void updateDBforSM() throws ClassNotFoundException, SQLException{
 
         ArrayList<String> Mname=new ArrayList();
+        
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        sqlConn=DriverManager.getConnection(dataConn,username,password);
+        //Statement stmt = sqlConn.createStatement();
+        //stmt.executeUpdate("TRUNCATE StorageMaterial");
         
         try
         {
@@ -68,11 +78,6 @@ public class PartProducingFrame extends javax.swing.JFrame {
             
             pstSM=sqlConn.prepareStatement("select * from StorageMaterial");
             
-            //Statement stmt = sqlConn.createStatement();
-            //stmt.executeUpdate("TRUNCATE StorageMaterial");
-            
-            
-            //pstdel=sqlConn.prepareStatement("truncate table StorageStatement");
             
             
             rsSM=pstSM.executeQuery();
@@ -87,6 +92,10 @@ public class PartProducingFrame extends javax.swing.JFrame {
             while(rsSM.next())
             {
                 Vector columnData=new Vector();
+                mBox1.addItem(rsSM.getString("MaterialName"));
+                mBox2.addItem(rsSM.getString("MaterialName"));
+                mBox3.addItem(rsSM.getString("MaterialName"));
+                
                 for (i=1;i<=q;i++)
                 {
                     String cname,cweight,cUP;
@@ -97,6 +106,7 @@ public class PartProducingFrame extends javax.swing.JFrame {
                     columnData.add(cname);
                     columnData.add(cweight);
                     columnData.add(cUP);
+                    
                     
                     
                     //columnData.add(rs.getString("IsArrived"));
@@ -112,6 +122,59 @@ public class PartProducingFrame extends javax.swing.JFrame {
             
         }
     
+    public void updateDBforPP() throws ClassNotFoundException, SQLException
+    {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        sqlConn=DriverManager.getConnection(dataConn,username,password);
+        //Statement stmt = sqlConn.createStatement();
+        //stmt.executeUpdate("TRUNCATE StorageMaterial");
+        
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConn=DriverManager.getConnection(dataConn,username,password);
+            
+            pstPP=sqlConn.prepareStatement("select * from CarParts");
+            
+            
+            
+            rsPP=pstPP.executeQuery();
+
+            
+            ResultSetMetaData stData=rsPP.getMetaData();
+            
+            int q=stData.getColumnCount();
+            DefaultTableModel RecordTable= (DefaultTableModel)jTable1.getModel();
+            RecordTable.setRowCount(0);
+            
+            while(rsPP.next())
+            {
+                Vector columnData=new Vector();
+                for (i=1;i<=q;i++)
+                {
+                    
+                    
+                    columnData.add(rsPP.getString("PartName"));
+                    columnData.add(rsPP.getString("Location"));
+                    columnData.add(rsPP.getString("Weight"));
+                    columnData.add(rsPP.getString("Material1"));
+                    columnData.add(rsPP.getString("Material2"));
+                    columnData.add(rsPP.getString("Material3"));
+                    columnData.add(rsPP.getString("Mweight1"));
+                    columnData.add(rsPP.getString("Mweight2"));
+                    columnData.add(rsPP.getString("Mweight3"));
+                    columnData.add(rsPP.getString("PartCost"));
+                    //columnData.add(rs.getString("IsArrived"));
+                }
+                RecordTable.addRow(columnData);
+                
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,15 +202,21 @@ public class PartProducingFrame extends javax.swing.JFrame {
         txtName = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        mBox1 = new javax.swing.JComboBox<>();
+        mBox2 = new javax.swing.JComboBox<>();
+        mBox3 = new javax.swing.JComboBox<>();
         delBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
         newBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         resetBtn = new javax.swing.JButton();
         StorageUpBtn = new javax.swing.JButton();
+        txtWeight1 = new javax.swing.JTextField();
+        txtWeight2 = new javax.swing.JTextField();
+        txtWeight3 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,6 +237,11 @@ public class PartProducingFrame extends javax.swing.JFrame {
                 "PartName", "Location", "Weight", "Material1", "Material2", "Material3", "PartCost"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -231,11 +305,11 @@ public class PartProducingFrame extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
         jLabel13.setText("Material3");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select material" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select material" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select material" }));
 
         delBtn.setText("Delete");
         delBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -279,6 +353,33 @@ public class PartProducingFrame extends javax.swing.JFrame {
             }
         });
 
+        txtWeight1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWeight1ActionPerformed(evt);
+            }
+        });
+
+        txtWeight2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWeight2ActionPerformed(evt);
+            }
+        });
+
+        txtWeight3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWeight3ActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel14.setText("Mweight1");
+
+        jLabel15.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel15.setText("Mweight2");
+
+        jLabel16.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel16.setText("Mweight3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -316,16 +417,29 @@ public class PartProducingFrame extends javax.swing.JFrame {
                                     .addComponent(txtLoc)
                                     .addComponent(txtWeight)
                                     .addComponent(txtCost)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox3, 0, 222, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(52, 52, 52)
-                                    .addComponent(jLabel9))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
+                                    .addComponent(mBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(mBox3, 0, 222, Short.MAX_VALUE)
+                                    .addComponent(mBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtWeight1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel15)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtWeight2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtWeight3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel9))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(61, 61, 61)
@@ -361,17 +475,25 @@ public class PartProducingFrame extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(txtWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(mBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtWeight1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel14))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(mBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtWeight2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(mBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtWeight3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -408,7 +530,40 @@ public class PartProducingFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void delBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delBtnActionPerformed
-        
+        DefaultTableModel jModel=(DefaultTableModel)jTable1.getModel();
+        int slctRow=jTable1.getSelectedRow();
+
+        try
+        {
+            String slctname= jModel.getValueAt(slctRow, 0).toString();
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConn=DriverManager.getConnection(dataConn,username,password);
+            pstPP=sqlConn.prepareStatement("delete from CarParts where PartName=?");
+
+            pstPP.setString(1, slctname);
+            pstPP.executeUpdate();// Use set to set the '?' as parameters in the declaration
+
+            txtName.setText("");
+            txtLoc.setText("");
+            txtCost.setText("");
+            txtWeight.setText("");
+            txtWeight1.setText("");
+            txtWeight2.setText("");
+            txtWeight3.setText("");
+
+            JOptionPane.showMessageDialog(this, "Current Part Producing Deleted");
+            updateDBforPP();
+        }
+        catch(ClassNotFoundException ex)
+        {
+            java.util.logging.Logger.getLogger(MaterialPurchasing.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(this, "ClassEx");
+        }
+        catch(SQLException ex)
+        {
+            java.util.logging.Logger.getLogger(MaterialPurchasing.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(this, "SQLEx");
+        }
     }//GEN-LAST:event_delBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
@@ -420,13 +575,141 @@ public class PartProducingFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void newBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBtnActionPerformed
-        
+    
+    try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConn=DriverManager.getConnection(dataConn,username,password);
+            pstPP=sqlConn.prepareStatement("INSERT INTO CarParts(PartName,Location,Weight,Material1,Material2,Material3,"
+                    + "Mweight1,Mweight2,Mweight3,Partcost) VALUES (?,?,?,?,?,?,?,?,?,?)");
+
+            pstPP.setString(1,txtName.getText());
+            pstPP.setString(2,txtLoc.getText());
+            pstPP.setString(3,txtWeight.getText());
+            
+            
+            pstPP.setString(4, (String) mBox1.getSelectedItem());
+            pstPP.setString(5, (String) mBox2.getSelectedItem());
+            pstPP.setString(6, (String) mBox3.getSelectedItem());
+            
+            pstPP.setString(7,txtWeight1.getText());
+            
+            if(txtWeight2.getText().equals(""))
+            {
+                pstPP.setString(8,"0");
+            }
+            else
+            {
+                pstPP.setString(8,txtWeight2.getText());
+            }
+            
+            if(txtWeight3.getText().equals(""))
+            {
+                pstPP.setString(9,"0");
+            }
+            else
+            {
+                pstPP.setString(9,txtWeight3.getText());
+            }
+            
+            pstPP.setString(10, txtCost.getText());
+            
+            
+            pstPP.executeUpdate();
+
+            txtName.setText("");
+            txtLoc.setText("");
+            txtCost.setText("");
+            txtWeight.setText("");
+            txtWeight1.setText("");
+            txtWeight2.setText("");
+            txtWeight3.setText("");
+            
+            JOptionPane.showMessageDialog(this, "New Part Producing Added");
+            updateDBforPP();
+        }
+        catch(ClassNotFoundException ex)
+        {
+            java.util.logging.Logger.getLogger(MaterialPurchasing.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(this, "ClassEx");
+        }
+        catch(SQLException ex)
+        {
+            java.util.logging.Logger.getLogger(MaterialPurchasing.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(this, "SQLEx");
+        }
 
        
     }//GEN-LAST:event_newBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        
+         DefaultTableModel jModel=(DefaultTableModel)jTable1.getModel();
+        int slctRow=jTable1.getSelectedRow();
 
+        try
+        {
+            
+            thisNum=Integer.parseInt(jModel.getValueAt(slctRow, 0).toString());
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConn=DriverManager.getConnection(dataConn,username,password);
+
+            pstPP=sqlConn.prepareStatement("update CarParts set PartName =?,Location =?,Weight =?,Material1 =?,Material2 =?,"
+                + "Material3 =?,mWeight1 =?,mWeight2 =? mWeight3=? where PartName =?");
+
+            pstPP.setString(1,txtName.getText());
+            pstPP.setString(2,txtLoc.getText());
+            pstPP.setString(3,txtWeight.getText());
+            
+            
+            pstPP.setString(4, (String) mBox1.getSelectedItem());
+            pstPP.setString(5, (String) mBox2.getSelectedItem());
+            pstPP.setString(6, (String) mBox3.getSelectedItem());
+            
+            pstPP.setString(7,txtWeight1.getText());
+            
+            if(txtWeight2.getText().equals(""))
+            {
+                pstPP.setString(8,"0");
+            }
+            else
+            {
+                pstPP.setString(8,txtWeight2.getText());
+            }
+            
+            if(txtWeight3.getText().equals(""))
+            {
+                pstPP.setString(9,"0");
+            }
+            else
+            {
+                pstPP.setString(9,txtWeight3.getText());
+            }
+            
+            pstPP.setString(10, txtCost.getText());
+            pstPP.executeUpdate();// Use set to set the '?' as parameters in the declaration
+
+            txtName.setText("");
+            txtLoc.setText("");
+            txtCost.setText("");
+            txtWeight.setText("");
+            txtWeight1.setText("");
+            txtWeight2.setText("");
+            txtWeight3.setText("");
+
+            JOptionPane.showMessageDialog(this, "Current Part Producing Updated");
+            updateDBforPP();
+        }
+        catch(ClassNotFoundException ex)
+        {
+            java.util.logging.Logger.getLogger(MaterialPurchasing.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(this, "ClassEx");
+        }
+        catch(SQLException ex)
+        {
+            java.util.logging.Logger.getLogger(MaterialPurchasing.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
+            JOptionPane.showMessageDialog(this, "SQLEx");
+        }
         
     }//GEN-LAST:event_updateBtnActionPerformed
 
@@ -436,6 +719,9 @@ public class PartProducingFrame extends javax.swing.JFrame {
         txtLoc.setText("");
         txtCost.setText("");
         txtWeight.setText("");
+        txtWeight1.setText("");
+        txtWeight2.setText("");
+        txtWeight3.setText("");
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void StorageUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StorageUpBtnActionPerformed
@@ -456,7 +742,7 @@ public class PartProducingFrame extends javax.swing.JFrame {
             
             while(rsMP.next())
             {
-                JOptionPane.showMessageDialog(this, "hi");
+                //JOptionPane.showMessageDialog(this, "hi");
                 //for(i=1;i<=q;i++)
                 {
 
@@ -546,12 +832,12 @@ public class PartProducingFrame extends javax.swing.JFrame {
                 catch(ClassNotFoundException ex)
                 {
                     java.util.logging.Logger.getLogger(PartProducingFrame.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
-                    JOptionPane.showMessageDialog(this, "ClassEx");
+                    //JOptionPane.showMessageDialog(this, "ClassEx");
                 }
                 catch(SQLException ex)
                 {
                     java.util.logging.Logger.getLogger(PartProducingFrame.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
-                    JOptionPane.showMessageDialog(this, "SQLEx");
+                    //JOptionPane.showMessageDialog(this, "SQLEx");
                 }
             }
         
@@ -564,6 +850,32 @@ public class PartProducingFrame extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_StorageUpBtnActionPerformed
+
+    private void txtWeight1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWeight1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtWeight1ActionPerformed
+
+    private void txtWeight2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWeight2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtWeight2ActionPerformed
+
+    private void txtWeight3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWeight3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtWeight3ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel jModel=(DefaultTableModel)jTable1.getModel();
+        int slctRow=jTable1.getSelectedRow();
+        txtName.setText(jModel.getValueAt(slctRow, 1).toString());
+        txtLoc.setText(jModel.getValueAt(slctRow, 2).toString());
+        txtWeight.setText(jModel.getValueAt(slctRow, 3).toString());
+        
+        //txtWeight1.setText(jModel.getValueAt(slctRow, 4).toString());
+        //txtWeight2.setText(jModel.getValueAt(slctRow, 5).toString());
+        //txtWeight.setText(jModel.getValueAt(slctRow, 6).toString());
+        
+        txtCost.setText(jModel.getValueAt(slctRow, 7).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -604,14 +916,14 @@ public class PartProducingFrame extends javax.swing.JFrame {
     private javax.swing.JButton StorageUpBtn;
     private javax.swing.JButton delBtn;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -621,12 +933,18 @@ public class PartProducingFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JComboBox<String> mBox1;
+    private javax.swing.JComboBox<String> mBox2;
+    private javax.swing.JComboBox<String> mBox3;
     private javax.swing.JButton newBtn;
     private javax.swing.JButton resetBtn;
     private javax.swing.JTextField txtCost;
     private javax.swing.JTextField txtLoc;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtWeight;
+    private javax.swing.JTextField txtWeight1;
+    private javax.swing.JTextField txtWeight2;
+    private javax.swing.JTextField txtWeight3;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
