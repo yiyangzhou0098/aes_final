@@ -5,6 +5,9 @@
 
 package com.fp_1;
 
+import com.fp_1.view.mainJFrame;
+
+
 /**
  *
  * @author yiyangzhou
@@ -12,6 +15,8 @@ package com.fp_1;
 public class Fp_1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        mainJFrame mainjframe = new mainJFrame();
+        mainjframe.setVisible(true);
+
     }
 }
