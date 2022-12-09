@@ -7,7 +7,9 @@ package com.fp_1.view.PartPurchasing;
 import com.fp_1.dao.PartPurchasing.PartPurchasingDao;
 import com.fp_1.model.PartPurchasing.PartPurchase;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,16 +18,95 @@ import javax.swing.JOptionPane;
 public class PartPurchaseJPanel extends javax.swing.JPanel {
 
     private PartPurchasingDao partPurchasingDao;
+
     /**
      * Creates new form PartPurchaseJPanel
      */
     public PartPurchaseJPanel() {
         initComponents();
+        populateTable();
     }
 
-    private void populatePage(){
-        // todo
+    private void populateTable() {
+        partPurchasingDao = new PartPurchasingDao();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.getDataVector().clear();
+
+        List<PartPurchase> listPartPurchase = partPurchasingDao.QueryAll();
+
+        for (PartPurchase partPurchase : listPartPurchase) {
+            // 添加 行数据
+
+//          cob.setSelectedItem(new Dept(user.getDeptid()));
+            model.addRow(new Object[]{
+                partPurchase.getID(),
+                partPurchase.getPartName(),
+                //              cob.getSelectedItem(),
+                partPurchase.getStatus(),
+                partPurchase.getWarehouseID(),
+                partPurchase.getNumber(),
+                partPurchase.getPerPrice(),
+                partPurchase.getForCar(),
+                partPurchase.getCreateTime()
+
+            });
+        }
+
     }
+
+    private void populateTableByType(String type, Object value) {
+        partPurchasingDao = new PartPurchasingDao();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.getDataVector().clear();
+
+        List<PartPurchase> listPartPurchase = null;
+        switch (type) {
+            case "ID":
+                listPartPurchase = partPurchasingDao.QueryById((String) value);
+                break;
+            case "PartName":
+                listPartPurchase = partPurchasingDao.QueryByName((String) value);
+                break;
+            case "CarType":
+                listPartPurchase = partPurchasingDao.QueryByCar((String) value);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Search type must be specific");
+
+                return;
+        }
+
+        for (PartPurchase partPurchase : listPartPurchase) {
+            // 添加 行数据
+
+//          cob.setSelectedItem(new Dept(user.getDeptid()));
+            model.addRow(new Object[]{
+                partPurchase.getID(),
+                partPurchase.getPartName(),
+                //              cob.getSelectedItem(),
+                partPurchase.getStatus(),
+                partPurchase.getWarehouseID(),
+                partPurchase.getNumber(),
+                partPurchase.getPerPrice(),
+                partPurchase.getForCar(),
+                partPurchase.getCreateTime()
+
+            });
+        }
+
+    }
+
+    private void setAllInputBlank() {
+        partnameField.setText("");
+        idField.setText("");
+        forcarField.setText("");
+        statusBox.setSelectedIndex(0);
+        numberField.setText("");
+        warehouseField.setText("");
+        perpriceField.setText("");
+        createtimeDate.cleanup();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,10 +117,10 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         refreshButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        searchBox = new javax.swing.JComboBox<>();
         SearchFiled = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
@@ -59,11 +140,12 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
         createtimeDate = new com.toedter.calendar.JDateChooser();
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 570));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -82,16 +164,21 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(table);
 
         refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Search By ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "PartName", "CarType", " " }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        searchBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "PartName", "CarType", " " }));
+        searchBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                searchBoxActionPerformed(evt);
             }
         });
 
@@ -122,7 +209,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Status");
 
-        statusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Unavailable", "Awaiting" }));
+        statusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Available", "Unavailable", "Awaiting" }));
 
         jLabel5.setText("Warehouse ID");
 
@@ -167,6 +254,13 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
 
         deleteButton.setText("Delete");
 
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,9 +271,11 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
                         .addGap(148, 148, 148)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
-                        .addComponent(SearchFiled, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(SearchFiled, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(45, 45, 45)
@@ -241,14 +337,15 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(createtimeDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SearchFiled, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SearchFiled, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -272,7 +369,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel6))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3)
-                                .addComponent(partnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(partnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(createtimeDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -288,9 +386,9 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
         getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void searchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_searchBoxActionPerformed
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
@@ -321,29 +419,36 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         String partname = partnameField.getText();
-        if(partname.equals("")){
+        if (partname.equals("")) {
             JOptionPane.showMessageDialog(this, "Part name can not be null");
             return;
         }
-        
+
         int id = 0;
-        try{
+        try {
             id = Integer.valueOf(idField.getText());
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID invalid");
             return;
         }
-        if(id == 0){
+        if (id == 0) {
             JOptionPane.showMessageDialog(this, "ID invalid");
             return;
         }
-        
+
         Date createtime = createtimeDate.getDate();
         // todo 判断是否空
-        
+        if (createtime.equals("")) {
+            JOptionPane.showMessageDialog(this, "Create time can not be empty");
+            return;
+        }
+
         short status = -1;
         String s_status = (String) statusBox.getSelectedItem();
         switch (s_status) {
+            case " ":
+                JOptionPane.showMessageDialog(this, "Status can not be empty");
+                return;
             case "Available":
                 status = 1;
                 break;
@@ -356,46 +461,45 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             default:
                 break;
         }
-        
+
         int warehouseid = 0;
-        try{
+        try {
             warehouseid = Integer.valueOf(warehouseField.getText());
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Warehouse ID invalid");
             return;
         }
-        if(warehouseid == 0){
+        if (warehouseid == 0) {
             JOptionPane.showMessageDialog(this, "Warehouse id invalid");
             return;
         }
-        
+
         int number = 0;
-        try{
+        try {
             number = Integer.valueOf(numberField.getText());
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Warehouse ID invalid");
             return;
         }
-        
+
         float perprice = (float) 0.000;
-        try{
+        try {
             perprice = Float.valueOf(perpriceField.getText());
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Per price invalid");
             return;
         }
-        if(perprice == 0.000){
+        if (perprice == 0.000) {
             JOptionPane.showMessageDialog(this, "Warehouse id invalid");
             return;
         }
-   
-        
+
         String forcar = forcarField.getText();
-        if(forcar.equals("")){
+        if (forcar.equals("")) {
             JOptionPane.showMessageDialog(this, "Car type can not be null");
             return;
-        }     
-        
+        }
+
         PartPurchase partPurchase = new PartPurchase();
         partPurchase.setID(id);
         partPurchase.setPartName(partname);
@@ -405,20 +509,43 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
         partPurchase.setNumber(number);
         partPurchase.setPerPrice(perprice);
         partPurchase.setForCar(forcar);
-         
+
         partPurchasingDao = new PartPurchasingDao();
-        if(partPurchasingDao.add(partPurchase)){
+        if (partPurchasingDao.add(partPurchase)) {
             System.out.println(partPurchase.getID());
             JOptionPane.showMessageDialog(null, "Add successfully");
-            populatePage();
-        
-        }else{
-          JOptionPane.showMessageDialog(null, "Add failed");
+            populateTable();
+            setAllInputBlank();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Add failed");
         }
     }//GEN-LAST:event_addButtonActionPerformed
-    
-    
-    
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        populateTable();        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String search_txt = SearchFiled.getText();
+        String search_type = (String) searchBox.getSelectedItem();
+        if (!search_txt.equals("Type here ...")) {
+            switch (search_type) {
+                case "ID":
+                    populateTableByType("ID",search_txt);
+                    break;
+                case "PartName":
+                    populateTableByType("PartName",search_txt);
+                    break;
+                case "CarType":
+                    populateTableByType("CarType",search_txt);
+                    break;
+                default:
+                    return;
+            }
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField SearchFiled;
@@ -427,7 +554,6 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField forcarField;
     private javax.swing.JTextField idField;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -438,12 +564,14 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField numberField;
     private javax.swing.JTextField partnameField;
     private javax.swing.JTextField perpriceField;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JComboBox<String> searchBox;
+    private javax.swing.JButton searchBtn;
     private javax.swing.JComboBox<String> statusBox;
+    private javax.swing.JTable table;
     private javax.swing.JTextField warehouseField;
     // End of variables declaration//GEN-END:variables
 }
