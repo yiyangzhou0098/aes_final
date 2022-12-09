@@ -48,15 +48,15 @@ public class PartPurchasingDao {
     }
 
     public List<PartPurchase> QueryById(String id) {
-        return _listpartPurchase(util.query("select * from PartPurchasing where ID like %?%", id));
+        return _listpartPurchase(util.query("select * from PartPurchasing where ID like concat('%',?,'%')", id));
     }
     
     public List<PartPurchase> QueryByCar(String forcar) {
-        return _listpartPurchase(util.query("select * from PartPurchasing where ForCar like '%${forcar}%'", forcar));
+        return _listpartPurchase(util.query("select * from PartPurchasing where ForCar like concat('%',?,'%')", forcar));
     }
 
     public List<PartPurchase> QueryByName(String name) {
-        return _listpartPurchase(util.query("select * from PartPurchasing where PartName like %${name}%", name));
+        return _listpartPurchase(util.query("select * from PartPurchasing where PartName like concat('%',?,'%')", name));
     }
 
     private PartPurchase _partPurchase(ResultSet rs) {
@@ -69,7 +69,7 @@ public class PartPurchasingDao {
                 partPurchase.setStatus(rs.getShort("Status"));
                 partPurchase.setWarehouseID(rs.getInt("WarehouseID"));
                 partPurchase.setNumber(rs.getInt("Number"));
-                partPurchase.setPerPrice(rs.getInt("PerPrice"));
+                partPurchase.setPerPrice(rs.getFloat("PerPrice"));
                 partPurchase.setForCar(rs.getString("ForCar"));
                 partPurchase.setCreateTime(rs.getDate("CreateTime"));
 
@@ -94,7 +94,7 @@ public class PartPurchasingDao {
                 partPurchase.setStatus(rs.getShort("Status"));
                 partPurchase.setWarehouseID(rs.getInt("WarehouseID"));
                 partPurchase.setNumber(rs.getInt("Number"));
-                partPurchase.setPerPrice(rs.getInt("PerPrice"));
+                partPurchase.setPerPrice(rs.getFloat("PerPrice"));
                 partPurchase.setForCar(rs.getString("ForCar"));
                 partPurchase.setCreateTime(rs.getDate("CreateTime"));
                 _listpartPurchase.add(partPurchase);

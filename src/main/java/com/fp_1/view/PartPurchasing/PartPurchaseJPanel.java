@@ -6,9 +6,12 @@ package com.fp_1.view.PartPurchasing;
 
 import com.fp_1.dao.PartPurchasing.PartPurchasingDao;
 import com.fp_1.model.PartPurchasing.PartPurchase;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,15 +21,75 @@ import javax.swing.table.DefaultTableModel;
 public class PartPurchaseJPanel extends javax.swing.JPanel {
 
     private PartPurchasingDao partPurchasingDao;
+    private SimpleDateFormat formatter;
+    private String oldValue = "";
 
     /**
      * Creates new form PartPurchaseJPanel
      */
     public PartPurchaseJPanel() {
         initComponents();
+        editTableListen();
         populateTable();
     }
 
+    private void editTableListen() {
+        partPurchasingDao = new PartPurchasingDao();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        model.addTableModelListener(new TableModelListener() {
+
+            public void tableChanged(TableModelEvent e) {
+                if (e.getColumn() < 0) {
+                    return;
+                }
+                String nVal = table.getValueAt(e.getLastRow(), e.getColumn())
+                        .toString();
+
+                if (nVal.equals(oldValue)) {
+                    return;
+                }
+
+                if (e.getColumn() == 0) {
+
+                    table.setValueAt(oldValue, e.getLastRow(), e.getColumn());
+                    return;
+                }
+                // 更新数据
+                int result = JOptionPane.showConfirmDialog(null, "Sure to edit?");
+
+                if (result == JOptionPane.OK_OPTION) {
+                    PartPurchase partPurchase = new PartPurchase();
+                    partPurchase.setID(Integer.valueOf(table.getValueAt(e.getLastRow(),
+                            0).toString()));
+                    partPurchase.setPartName(table.getValueAt(e.getLastRow(), 1).toString());
+                    partPurchase.setWarehouseID(Integer.valueOf(table.getValueAt(e.getLastRow(), 3).toString()));
+                    partPurchase.setStatus(Short.valueOf(table.getValueAt(e.getLastRow(), 2).toString()));
+                    partPurchase.setNumber(Integer.valueOf(table.getValueAt(e.getLastRow(),
+                            4).toString()));
+                    partPurchase.setPerPrice(Float.valueOf(table.getValueAt(e.getLastRow(),
+                            5).toString()));
+                    partPurchase.setForCar(table.getValueAt(e.getLastRow(), 6).toString());
+                    
+                    SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
+                    String str = table.getValueAt(e.getLastRow(),7).toString();
+                    try{
+                        Date date1 = formatter.parse(str);
+                        partPurchase.setCreateTime(date1);
+                    }catch (java.text.ParseException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                    
+                    
+                    partPurchasingDao.update(partPurchase);
+                    populateTable();
+                }
+                
+            }
+        });
+    }
+    
     private void populateTable() {
         partPurchasingDao = new PartPurchasingDao();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -157,7 +220,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Short.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Short.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -253,6 +316,11 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
         });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         searchBtn.setText("Search");
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -545,6 +613,23 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if (table.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Select at least one row");
+            return;
+        }
+        int result = JOptionPane.showConfirmDialog(null, "Sure to delete?");
+        // 判断用户是否点击
+
+        if (result == JOptionPane.OK_OPTION) {
+            int id = Integer.valueOf(table.getValueAt(
+                    table.getSelectedRow(), 0).toString());
+            partPurchasingDao = new PartPurchasingDao();
+            partPurchasingDao.delete(id);
+            populateTable();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

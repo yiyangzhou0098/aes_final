@@ -201,7 +201,7 @@
                 <Column editable="true" title="Status" type="java.lang.Short"/>
                 <Column editable="true" title="WarehouseID" type="java.lang.Integer"/>
                 <Column editable="true" title="Number" type="java.lang.Integer"/>
-                <Column editable="true" title="PerPrice" type="java.lang.Float"/>
+                <Column editable="true" title="PerPrice" type="java.lang.Double"/>
                 <Column editable="true" title="ForCar" type="java.lang.String"/>
                 <Column editable="true" title="CreateTime" type="java.lang.String"/>
               </Table>
@@ -399,6 +399,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="searchBtn">
       <Properties>
