@@ -59,7 +59,12 @@ public class UserEditPanel extends javax.swing.JPanel {
             }
         });
 
-        idBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Admin", "Supplier-MP", "Supplier-PP", "Supplier-PS" }));
+        idBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Admin", "Supplier-MP", "Supplier-PP", "Supplier-PS", "Customer" }));
+        idBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idBoxActionPerformed(evt);
+            }
+        });
 
         editBtn.setText("Upadate");
         editBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -218,7 +223,7 @@ public class UserEditPanel extends javax.swing.JPanel {
         Object slctid=idBox.getSelectedItem();
 
         
-
+        //not finished
         
 
         txtName.setText("");
@@ -236,6 +241,7 @@ public class UserEditPanel extends javax.swing.JPanel {
         {
             JOptionPane.showMessageDialog(this, "Unique UserName Required");
             txtName.setText("");
+            txtPW.setText("");
             return;
         }
 
@@ -268,6 +274,10 @@ public class UserEditPanel extends javax.swing.JPanel {
         txtPW.setText(jModel.getValueAt(slctRow, 2).toString());
         txtCurid.setText(jModel.getValueAt(slctRow, 3).toString());
     }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void idBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
