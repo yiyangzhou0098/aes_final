@@ -196,14 +196,13 @@ public class LoginFrame extends javax.swing.JFrame {
         if (idslct.toString()=="Supplier-MP"){
             boolean isin=false;
             //sysAdminFrame.setUserIdentity("Com");
-           
+
 
             //this.setVisible(false);
         }
 
         if (idslct.toString()=="Supplier-PP"){
             boolean isin=false;
-            
             //sysAdminFrame.setUserIdentity("Hos");
             //JOptionPane.showMessageDialog(this, idslct.toString());
             if (!isin){
@@ -216,7 +215,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         if (idslct.toString()=="Supplier-PS"){
             boolean isin=false;
-            
+
             if (!isin){
                 JOptionPane.showMessageDialog(this, "No Such Patient In System");
                 txtUser.setText("");
@@ -265,6 +264,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_clrBtnActionPerformed
 
     private void regBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBtnActionPerformed
+
         CusRegisterFrame cusreg=new CusRegisterFrame();
         cusreg.setVisible(true);
     }//GEN-LAST:event_regBtnActionPerformed

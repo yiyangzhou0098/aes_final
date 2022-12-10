@@ -57,6 +57,7 @@ public class UserAccountDao {
             if (rs.next()) {
                 
                 useraccount = new UserAccount();
+
                 useraccount.setRealName(rs.getString("RealName"));
                 useraccount.setEmail(rs.getString("Email"));
                 useraccount.setPhone(rs.getString("Phone"));

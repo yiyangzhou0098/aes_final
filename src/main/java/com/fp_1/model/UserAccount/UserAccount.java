@@ -9,12 +9,14 @@ package com.fp_1.model.UserAccount;
  * @author kai
  */
 public class UserAccount {
+
     String RealName;
     String email;
     String phone;
     String userName;
     String userPassword;
     String userIdentity;
+
 
     public String getRealName() {
         return RealName;
@@ -40,7 +42,6 @@ public class UserAccount {
         this.phone = phone;
     }
 
-    
     public String getUserName() {
         return userName;
     }

@@ -552,7 +552,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             return;
         }
         if (perprice == 0.000) {
-            JOptionPane.showMessageDialog(this, "Warehouse id invalid");
+            JOptionPane.showMessageDialog(this, "Per price can not be empty");
             return;
         }
 

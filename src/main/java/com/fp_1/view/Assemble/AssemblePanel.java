@@ -4,17 +4,144 @@
  */
 package com.fp_1.view.Assemble;
 
+import com.fp_1.dao.Assemble.AssembleDao;
+import com.fp_1.dao.Dealership.DealershipDao;
+import com.fp_1.dao.PartPurchasing.PartPurchasingDao;
+import com.fp_1.model.PartPurchasing.PartPurchase;
+import com.fp_1.model.Assemble.Assemble;
+import com.fp_1.model.Dealership.Dealership;
+
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author yiyangzhou
  */
 public class AssemblePanel extends javax.swing.JPanel {
 
+    private PartPurchasingDao partPurchasingDao;
+    private SimpleDateFormat formatter;
+    private String oldValue = "";
+    String transmission = null;
+    String drivetype = null;
+    String enginetype = null;
+    String PhotoPathString = null;
+
     /**
      * Creates new form AssemblePanel
      */
+
     public AssemblePanel() {
         initComponents();
+        populateTable();
+        populateResultTable();
+//        searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("../pics/search1.png"))); // NOI18N
+
+//        updateStatusProgress();
+    }
+
+    private void populateTable() {
+        partPurchasingDao = new PartPurchasingDao();
+        DefaultTableModel model = (DefaultTableModel) table2.getModel();
+        model.getDataVector().clear();
+
+        List<PartPurchase> listPartPurchase = partPurchasingDao.QueryAll();
+
+        for (PartPurchase partPurchase : listPartPurchase) {
+
+//          cob.setSelectedItem(new Dept(user.getDeptid()));
+            model.addRow(new Object[]{
+                partPurchase.getID(),
+                partPurchase.getPartName(),
+                //              cob.getSelectedItem(),
+                partPurchase.getStatus(),
+                partPurchase.getWarehouseID(),
+                partPurchase.getNumber(),
+                partPurchase.getPerPrice(),
+                partPurchase.getForCar(),
+                partPurchase.getCreateTime()
+
+            });
+        }
+
+    }
+
+    private void populateResultTable() {
+        AssembleDao assembleDao = new AssembleDao();
+        DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
+        model.getDataVector().clear();
+
+        List<Assemble> listAssemble = assembleDao.QueryAll();
+
+        for (Assemble assemble : listAssemble) {
+//          cob.setSelectedItem(new Dept(user.getDeptid()));
+            model.addRow(new Object[]{
+                assemble.getAssembleID(),
+                //              cob.getSelectedItem(),
+                assemble.getStatus(),
+                assemble.getCar(),
+                assemble.getCreateTime()
+            });
+        }
+    }
+
+    private void populateTableByType(String type, Object value) {
+        partPurchasingDao = new PartPurchasingDao();
+        DefaultTableModel model = (DefaultTableModel) table2.getModel();
+        model.getDataVector().clear();
+
+        List<PartPurchase> listPartPurchase = null;
+        switch (type) {
+            case "ID":
+                listPartPurchase = partPurchasingDao.QueryById((String) value);
+                break;
+            case "PartName":
+                listPartPurchase = partPurchasingDao.QueryByName((String) value);
+                break;
+            case "CarType":
+                listPartPurchase = partPurchasingDao.QueryByCar((String) value);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Search type must be specific");
+
+                return;
+        }
+
+        for (PartPurchase partPurchase : listPartPurchase) {
+
+//          cob.setSelectedItem(new Dept(user.getDeptid()));
+            model.addRow(new Object[]{
+                partPurchase.getID(),
+                partPurchase.getPartName(),
+                //              cob.getSelectedItem(),
+                partPurchase.getStatus(),
+                partPurchase.getWarehouseID(),
+                partPurchase.getNumber(),
+                partPurchase.getPerPrice(),
+                partPurchase.getForCar(),
+                partPurchase.getCreateTime()
+
+            });
+        }
+
     }
 
     /**
@@ -26,43 +153,738 @@ public class AssemblePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        SearchFiled = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        forcarField1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        refreshButton1 = new javax.swing.JButton();
+        refreshButton2 = new javax.swing.JButton();
+        confirmBtn = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        table2 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        searchBox = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        assLabel = new javax.swing.JLabel();
+        locaBox = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        resultTable = new javax.swing.JTable();
+        assIDtxt = new javax.swing.JTextField();
+        vinTxt = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        infoLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        priceTxt = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        photoDisplau = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        photoLabel = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+        setPreferredSize(new java.awt.Dimension(800, 570));
+
+        jTabbedPane1.setBounds(new java.awt.Rectangle(0, 0, 770, 570));
+        jTabbedPane1.setMinimumSize(new java.awt.Dimension(770, 570));
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(770, 570));
+
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.setPreferredSize(new java.awt.Dimension(800, 570));
+
+        SearchFiled.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
+        SearchFiled.setText("Type here ...");
+        SearchFiled.setToolTipText("");
+        SearchFiled.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchFiledActionPerformed(evt);
+            }
+        });
+
+        searchBtn.setIcon(new javax.swing.ImageIcon("/Users/yiyangzhou/Documents/MS/AED/FP/fp1/fp_1/target/classes/images/search1.png")); // NOI18N
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
+        forcarField1.setText("1");
+        forcarField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                forcarField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Number");
+
+        refreshButton1.setText("Delete");
+        refreshButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButton1ActionPerformed(evt);
+            }
+        });
+
+        refreshButton2.setText("Refresh");
+        refreshButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButton2ActionPerformed(evt);
+            }
+        });
+
+        confirmBtn.setText("Confirm");
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 3, 13)); // NOI18N
+        jLabel8.setText("Assemble selected parts");
+
+        table2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "PartName", "Status", "WarehouseID", "Number", "PerPrice", "ForCar", "CreateTime"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Short.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(table2);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setText("Search By ");
+
+        searchBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "PartName", "CarType", " " }));
+        searchBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(277, 277, 277)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(113, 113, 113)
+                        .addComponent(refreshButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refreshButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(SearchFiled, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(jLabel10)
+                        .addGap(36, 36, 36)
+                        .addComponent(forcarField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(SearchFiled, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(searchBox))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(refreshButton2)
+                    .addComponent(refreshButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(forcarField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(confirmBtn)
+                .addGap(51, 51, 51))
         );
+
+        jTabbedPane1.addTab("Assemble", jPanel1);
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 570));
+
+        assLabel.setText("Assemble ID");
+
+        locaBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Brookline", "Boston", "Malden", "New York" }));
+
+        resultTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null,  new Short((short) 70), null, null}
+            },
+            new String [] {
+                "AssembleID", "Status", "Car", "CreateTime"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Short.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(resultTable);
+
+        assIDtxt.setEnabled(false);
+        assIDtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assIDtxtActionPerformed(evt);
+            }
+        });
+
+        vinTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vinTxtActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Location");
+
+        infoLabel.setFont(new java.awt.Font("Helvetica Neue", 3, 13)); // NOI18N
+        infoLabel.setText("Information to be completed");
+
+        jLabel4.setText("VIN");
+
+        jLabel3.setText("Picture");
+
+        jButton1.setText("Upload");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Prepare For sale");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Price");
+
+        priceTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceTxtActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Delete");
+
+        jButton5.setText("Refresh");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Confirm");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        photoLabel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2)
+                                    .addComponent(infoLabel))
+                                .addGap(27, 27, 27))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(82, 82, 82)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(assLabel)
+                                            .addComponent(jLabel4))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(vinTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(113, 113, 113))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(assIDtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(locaBox, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(73, 73, 73)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel3)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addGap(26, 26, 26)))
+                                .addGap(53, 53, 53)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(priceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(29, 29, 29)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton5)
+                                    .addGap(47, 47, 47)
+                                    .addComponent(jButton4)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(93, 93, 93)
+                                .addComponent(photoDisplau, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton5)
+                            .addComponent(jButton4)
+                            .addComponent(jButton2)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(photoDisplau, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(infoLabel)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(assLabel)
+                            .addComponent(assIDtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(vinTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(priceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(locaBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))))
+                    .addComponent(photoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(95, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Result", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName("Assesmble");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void searchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBoxActionPerformed
+
+    private void SearchFiledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchFiledActionPerformed
+
+    }//GEN-LAST:event_SearchFiledActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String search_txt = SearchFiled.getText();
+        String search_type = (String) searchBox.getSelectedItem();
+        if (!search_txt.equals("Type here ...")) {
+            switch (search_type) {
+                case "ID":
+                    populateTableByType("ID", search_txt);
+                    break;
+                case "PartName":
+                    populateTableByType("PartName", search_txt);
+                    break;
+                case "CarType":
+                    populateTableByType("CarType", search_txt);
+                    break;
+                default:
+                    return;
+            }
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void forcarField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forcarField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_forcarField1ActionPerformed
+
+    private void refreshButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton1ActionPerformed
+        if (table2.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Select at least one row");
+            return;
+        }
+        int result = JOptionPane.showConfirmDialog(null, "Sure to delete?");
+
+        if (result == JOptionPane.OK_OPTION) {
+            int id = Integer.valueOf(table2.getValueAt(
+                    table2.getSelectedRow(), 0).toString());
+            partPurchasingDao = new PartPurchasingDao();
+            partPurchasingDao.delete(id);
+            populateTable();
+
+        }
+    }//GEN-LAST:event_refreshButton1ActionPerformed
+
+    private void refreshButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton2ActionPerformed
+        populateTable();
+    }//GEN-LAST:event_refreshButton2ActionPerformed
+
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        if (table2.getSelectedRowCount() <= 1) {
+            JOptionPane.showMessageDialog(null, "Select at least one row");
+            return;
+        }
+
+        int[] selectedRows = table2.getSelectedRows();
+        DefaultTableModel model = (DefaultTableModel) table2.getModel();
+        partPurchasingDao = new PartPurchasingDao();
+
+        // verify different car type
+        String select_1_car = String.valueOf(table2.getValueAt(selectedRows[0], 6));
+        for (int i = 1; i <= selectedRows.length - 1; i++) {
+            if (!(String.valueOf(table2.getValueAt(selectedRows[i], 6)).equals(select_1_car))) {
+                JOptionPane.showMessageDialog(null, "Can not select parts which are for different cars!");
+                return;
+            }
+        }
+
+        int result = JOptionPane.showConfirmDialog(null, String.format("Sure to assemble [%s]?", select_1_car));
+
+        if (result == JOptionPane.OK_OPTION) {
+            for (int i = 0; i <= selectedRows.length - 1; i++) {
+
+                int id = Integer.valueOf(table2.getValueAt(selectedRows[i], 0).toString());
+                partPurchasingDao.minorsNum(id, 1);
+            }
+
+            populateTable();
+
+            updateResult(select_1_car);
+            populateResultTable();
+        }
+    }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void updateResult(String car) {
+        AssembleDao assembleDao = new AssembleDao();
+        Date now = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat();
+//        sdf.applyPattern("yyyy-MM-dd");
+//        Date format_now = sdf.format(now);
+        Assemble assemble = new Assemble();
+        assemble.setCreateTime(now);
+        assemble.setCar(car);
+
+        assembleDao.add(assemble);
+
+    }
+
+    private void vinTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vinTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vinTxtActionPerformed
+
+    private void assIDtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assIDtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_assIDtxtActionPerformed
+
+    private void priceTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_priceTxtActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        populateResultTable();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (resultTable.getSelectedRowCount() < 1) {
+            JOptionPane.showMessageDialog(null, "Select at least one row");
+            return;
+        }
+        int selectedRow = resultTable.getSelectedRow();
+        int ID = (Integer) resultTable.getValueAt(selectedRow, 0);
+
+        assIDtxt.setText(String.valueOf(ID));
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        AssembleDao assembleDao = new AssembleDao();
+
+        String flag = assIDtxt.getText();
+        if (flag.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please prepare for sale first");
+            return;
+        }
+        int selectedRow = resultTable.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
+
+        // verify different car type
+        String car = String.valueOf(resultTable.getValueAt(selectedRow, 2));
+        int ID = (Integer) resultTable.getValueAt(selectedRow, 0);
+        
+        int VIN = 0;
+                
+        try {
+            VIN = Integer.valueOf(vinTxt.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "VIN invalid");
+            return;
+        }
+
+
+        Date date = (Date) resultTable.getValueAt(selectedRow, 3);
+
+        float price = (float) 0.000;
+        try {
+            price = Float.valueOf(priceTxt.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Per price invalid");
+            return;
+        }
+        if (price == 0.000) {
+            JOptionPane.showMessageDialog(this, "price can not be empty");
+            return;
+        }        
+        
+        String location = (String) locaBox.getSelectedItem();
+        if(location.equals(" ")){
+            JOptionPane.showMessageDialog(this, "select location");
+            return;
+        }
+        
+
+        switch (car) {
+            case "Jaguar_XE":
+                transmission = "Automatic";
+                drivetype = "Rear wheel";
+                enginetype = "Turbo gas 2.5";
+                break;
+            case "Jaguar_XF":
+                transmission = "Automatic";
+                drivetype = "All wheel";
+                enginetype = "Turbo gas 3.0";                
+                break;
+            case "Mercedes_Cclass":
+                transmission = "Automatic";
+                drivetype = "Rear wheel";
+                enginetype = "Turbo gas 2.0";
+                break;
+            case "Mercedes_Eclass":
+                transmission = "Automatic";
+                drivetype = "All wheel";
+                enginetype = "Turbo gas 3.5";
+                break;
+            case "BMW_M4":
+                transmission = "Automatic";
+                drivetype = "All wheel, Xdrive";
+                enginetype = "Turbo gas 3.5";
+                break;
+            case "BMW_M5":
+                transmission = "Automatic";
+                drivetype = "All wheel, Xdrive";
+                enginetype = "Turbo gas 5.0";
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "unmatch car type");
+                return;
+        }
+        
+        if(this.PhotoPathString == null){
+            JOptionPane.showMessageDialog(this, "photo needs to be updated");
+            return;
+        }
+        
+        int result = JOptionPane.showConfirmDialog(null, String.format("Sure to sale the [%s]? VIN:%d", car, ID));
+        if (result == JOptionPane.OK_OPTION) {
+                    
+            Dealership dealership = new Dealership();
+            dealership.setTransmission(transmission);
+            dealership.setCar(car);
+            dealership.setDriveType(drivetype);
+            dealership.setEngineType(enginetype);
+            dealership.setLocation(location);
+            dealership.setVIN(VIN);
+            dealership.setPrice(price);
+            dealership.setPhotopath(PhotoPathString);
+
+            DealershipDao dealershipDao = new DealershipDao();
+            dealershipDao.add(dealership);
+
+            vinTxt.setText("");
+            assIDtxt.setText("");
+            priceTxt.setText("");
+            locaBox.setSelectedIndex(0);
+
+            assembleDao.delete(ID);
+            populateResultTable();
+            this.PhotoPathString = null;
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ByteArrayOutputStream baos = null;
+        JFileChooser chooser = new JFileChooser();
+        chooser.setMultiSelectionEnabled(true);  // use type filter
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Please Select File Type", "jpg", "png", "jpeg", "bmp");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        File f = chooser.getSelectedFile();// read the image
+        if (f == null) {
+            return;
+        }
+        String photoPath = f.getPath();
+        this.PhotoPathString = photoPath;
+        ImageIcon image = new ImageIcon(photoPath);
+        image.setImage(image.getImage().getScaledInstance(200, 120,Image.SCALE_DEFAULT ));
+        
+        photoLabel.setIcon(image);
+//        photoLabel.setSize(width, height);  
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void updateStatusProgress() {
+        resultTable.getColumn("Status").setCellRenderer(new ProgressCellRender());
+
+        ProgressTimer ptimer = new ProgressTimer(model);
+        worker.execute();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField SearchFiled;
+    private javax.swing.JTextField assIDtxt;
+    private javax.swing.JLabel assLabel;
+    private javax.swing.JButton confirmBtn;
+    private javax.swing.JTextField forcarField1;
+    private javax.swing.JLabel infoLabel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JComboBox<String> locaBox;
+    private javax.swing.JLabel photoDisplau;
+    private javax.swing.JLabel photoLabel;
+    private javax.swing.JTextField priceTxt;
+    private javax.swing.JButton refreshButton1;
+    private javax.swing.JButton refreshButton2;
+    private javax.swing.JTable resultTable;
+    private javax.swing.JComboBox<String> searchBox;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTable table2;
+    private javax.swing.JTextField vinTxt;
     // End of variables declaration//GEN-END:variables
+}
+
+class ProgressRenderer extends DefaultTableCellRenderer {
+
+    private final JProgressBar b = new JProgressBar(0, 100);
+
+    public ProgressRenderer() {
+        super();
+        setOpaque(true);
+        b.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        Integer i = (Integer) value;
+        String text = "Completed";
+        if (i < 0) {
+            text = "Error";
+        } else if (i < 100) {
+            b.setValue(i);
+            return b;
+        }
+        super.getTableCellRendererComponent(table, text, isSelected, hasFocus, row, column);
+        return this;
+    }
 }

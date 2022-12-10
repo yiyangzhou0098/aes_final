@@ -25,6 +25,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+
                       <Component id="delBtn1" min="-2" pref="106" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="createBtn" min="-2" pref="106" max="-2" attributes="0"/>
@@ -62,6 +63,7 @@
                                           <Component id="idBox" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -93,6 +95,7 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="243" max="-2" attributes="0"/>
+
               <EmptySpace pref="15" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
@@ -127,11 +130,13 @@
                   <Component id="txtCurid" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
               </Group>
+
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="createBtn" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                   <Component id="delBtn" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                   <Component id="editBtn" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
+
                   <Component id="delBtn1" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -158,11 +163,13 @@
     <Component class="javax.swing.JComboBox" name="idBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+
           <StringArray count="5">
             <StringItem index="0" value="System Admin"/>
             <StringItem index="1" value="Supplier-MP"/>
             <StringItem index="2" value="Supplier-PP"/>
             <StringItem index="3" value="Supplier-PS"/>
+
             <StringItem index="4" value="Customer"/>
           </StringArray>
         </Property>
@@ -224,6 +231,7 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+
               <Table columnCount="6" rowCount="6">
                 <Column editable="true" title="Real Name" type="java.lang.Object"/>
                 <Column editable="true" title="Phone" type="java.lang.Object"/>
@@ -242,6 +250,7 @@
         <Property name="text" type="java.lang.String" value="User Name"/>
       </Properties>
     </Component>
+
     <Component class="javax.swing.JTextField" name="txtEmail">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">

@@ -47,6 +47,7 @@ public class UserEditPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+
         txtEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -65,6 +66,7 @@ public class UserEditPanel extends javax.swing.JPanel {
                 txtNameActionPerformed(evt);
             }
         });
+
 
         idBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Admin", "Supplier-MP", "Supplier-PP", "Supplier-PS", "Customer" }));
         idBox.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +120,7 @@ public class UserEditPanel extends javax.swing.JPanel {
 
         jLabel2.setText("User Name");
 
+
         jLabel4.setText("Email");
 
         jLabel5.setText("Real Name");
@@ -149,6 +152,7 @@ public class UserEditPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
                         .addComponent(delBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(createBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,6 +182,7 @@ public class UserEditPanel extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(txtCurid, javax.swing.GroupLayout.Alignment.LEADING)
+
                                             .addComponent(idBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,6 +280,7 @@ public class UserEditPanel extends javax.swing.JPanel {
         Object slctid=idBox.getSelectedItem();
 
         
+
         //not finished
         
 
@@ -293,6 +299,7 @@ public class UserEditPanel extends javax.swing.JPanel {
         {
             JOptionPane.showMessageDialog(this, "Unique UserName Required");
             txtName.setText("");
+
             txtPW.setText("");
             return;
         }
@@ -326,6 +333,7 @@ public class UserEditPanel extends javax.swing.JPanel {
         txtPW.setText(jModel.getValueAt(slctRow, 2).toString());
         txtCurid.setText(jModel.getValueAt(slctRow, 3).toString());
     }//GEN-LAST:event_jScrollPane1MouseClicked
+
 
     private void idBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBoxActionPerformed
         // TODO add your handling code here:
