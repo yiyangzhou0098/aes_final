@@ -20,6 +20,11 @@ public class PartPurchasingDao {
 
     ConnectDB util = new ConnectDB();
 
+    public boolean minorsNum(int id, int number){
+        return util.update("update PartPurchasing set Number=Number-? where ID = ?;",
+        number, id) > 0;
+    }
+    
     public boolean add(PartPurchase partpurchase) {
         return util.update("insert into PartPurchasing(ID,PartName,Status,"
                 + "WarehouseID,Number,PerPrice,ForCar,CreateTime) values(?,?,?,?,?,?,?,?)",

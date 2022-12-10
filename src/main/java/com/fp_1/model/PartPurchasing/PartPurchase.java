@@ -89,7 +89,7 @@ public class PartPurchase implements Serializable {
 
     @Override
     public String toString() {
-        return this.PartName;
+        return String.valueOf(ID);
     }
 
     public PartPurchase(int ID, int WarehouseID, String PartName, Date CreateTime, short Status, int Number, float PerPrice, String ForCar) {
