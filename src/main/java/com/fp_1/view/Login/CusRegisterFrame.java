@@ -240,6 +240,8 @@ public class CusRegisterFrame extends javax.swing.JFrame {
         String phone=txtPhone.getText();
         
         String email=txtEmail.getText();
+        // say hi!
+        
         /*try
         {
             Properties properties=new Properties();
