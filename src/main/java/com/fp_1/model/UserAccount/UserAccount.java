@@ -9,9 +9,38 @@ package com.fp_1.model.UserAccount;
  * @author kai
  */
 public class UserAccount {
+
+    String RealName;
+    String email;
+    String phone;
     String userName;
     String userPassword;
     String userIdentity;
+
+
+    public String getRealName() {
+        return RealName;
+    }
+
+    public void setRealName(String RealName) {
+        this.RealName = RealName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUserName() {
         return userName;

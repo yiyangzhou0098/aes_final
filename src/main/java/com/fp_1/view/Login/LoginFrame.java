@@ -196,40 +196,13 @@ public class LoginFrame extends javax.swing.JFrame {
         if (idslct.toString()=="Supplier-MP"){
             boolean isin=false;
             //sysAdminFrame.setUserIdentity("Com");
-            for (Users us:uDirectory.getDirectory()){
-                if(loginNa.equals(us.getUserName()) & loginPw.equals(us.getUserPassword()) & idslct.toString().equals(us.getUserIdentity()))
-                {
-                    txtUser.setText("");
-                    pwPassword.setText("");
-                    comAdminFrame comAdminFrame=new comAdminFrame(pDirectory,dDirectory,comDirectory,eHistory,hDirectory,cityDirectory,houseDirectory);
-                    comAdminFrame.setVisible(true);
-                    isin=true;
-                }
 
-            }
-            if (!isin){
-                JOptionPane.showMessageDialog(this, "No Such ComAdmin In System");
-                txtUser.setText("");
-                pwPassword.setText("");
-            }
 
             //this.setVisible(false);
         }
 
         if (idslct.toString()=="Supplier-PP"){
             boolean isin=false;
-            for (Users us:uDirectory.getDirectory())
-            {
-                if(loginNa.equals(us.getUserName()) & loginPw.equals(us.getUserPassword()) & idslct.toString().equals(us.getUserIdentity()))
-                {
-                    txtUser.setText("");
-                    pwPassword.setText("");
-                    hosAdminFrame hosAdminFrame=new hosAdminFrame(pDirectory,dDirectory,comDirectory,eHistory,hDirectory,cityDirectory,houseDirectory);
-                    hosAdminFrame.setVisible(true);
-                    isin=true;
-                }
-
-            }
             //sysAdminFrame.setUserIdentity("Hos");
             //JOptionPane.showMessageDialog(this, idslct.toString());
             if (!isin){
@@ -242,19 +215,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         if (idslct.toString()=="Supplier-PS"){
             boolean isin=false;
-            for (Patient pt:pDirectory.getHistory())
-            {
-                if(loginNa.equals(pt.getMeUser().getUserName()) & loginPw.equals(pt.getMeUser().getUserPassword()) )
-                {
-                    txtUser.setText("");
-                    pwPassword.setText("");
-                    String pid=pt.getPatientID();
-                    patientFrame patientFrame=new patientFrame(pDirectory,dDirectory,hDirectory,eHistory,uDirectory,pid);
-                    patientFrame.setVisible(true);
-                    isin=true;
-                }
 
-            }
             if (!isin){
                 JOptionPane.showMessageDialog(this, "No Such Patient In System");
                 txtUser.setText("");
@@ -303,7 +264,9 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_clrBtnActionPerformed
 
     private void regBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBtnActionPerformed
-        // TODO add your handling code here:
+
+        CusRegisterFrame cusreg=new CusRegisterFrame();
+        cusreg.setVisible(true);
     }//GEN-LAST:event_regBtnActionPerformed
 
     /**
