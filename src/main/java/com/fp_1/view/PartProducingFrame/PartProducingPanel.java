@@ -148,9 +148,6 @@ public class PartProducingPanel extends javax.swing.JPanel {
                     columnData.add(rsPP.getString("PartName"));
                     columnData.add(rsPP.getString("Location"));
                     columnData.add(rsPP.getString("Weight"));
-                    columnData.add(rsPP.getString("Material1"));
-                    columnData.add(rsPP.getString("Material2"));
-                    columnData.add(rsPP.getString("Material3"));
                     columnData.add(rsPP.getString("Mweight1"));
                     columnData.add(rsPP.getString("Mweight2"));
                     columnData.add(rsPP.getString("Mweight3"));
@@ -209,6 +206,10 @@ public class PartProducingPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         exitBtn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(44, 62, 80));
+        setForeground(new java.awt.Color(255, 255, 255));
+
+        txtCost.setBackground(new java.awt.Color(108, 122, 137));
         txtCost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCostActionPerformed(evt);
@@ -216,8 +217,10 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Location");
 
+        txtName.setBackground(new java.awt.Color(108, 122, 137));
         txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNameActionPerformed(evt);
@@ -225,17 +228,23 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel12.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Material2");
 
         jLabel13.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Material3");
 
+        mBox1.setBackground(new java.awt.Color(108, 122, 137));
         mBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select material" }));
 
+        mBox2.setBackground(new java.awt.Color(108, 122, 137));
         mBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select material" }));
 
+        mBox3.setBackground(new java.awt.Color(108, 122, 137));
         mBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select material" }));
 
+        delBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         delBtn.setText("Delete");
         delBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,11 +253,14 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Material Storage Catalog");
 
         jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Edit CarPart Producing Info");
 
+        jTable1.setBackground(new java.awt.Color(108, 122, 137));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -267,6 +279,7 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        newBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         newBtn.setText("New Order");
         newBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,6 +287,7 @@ public class PartProducingPanel extends javax.swing.JPanel {
             }
         });
 
+        updateBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         updateBtn.setText("Update");
         updateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +295,7 @@ public class PartProducingPanel extends javax.swing.JPanel {
             }
         });
 
+        resetBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         resetBtn.setText("Reset");
         resetBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,6 +303,7 @@ public class PartProducingPanel extends javax.swing.JPanel {
             }
         });
 
+        jTable2.setBackground(new java.awt.Color(108, 122, 137));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -301,13 +317,15 @@ public class PartProducingPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        StorageUpBtn.setText("Update Storage");
+        StorageUpBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        StorageUpBtn.setText("Refresh");
         StorageUpBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StorageUpBtnActionPerformed(evt);
             }
         });
 
+        txtWeight1.setBackground(new java.awt.Color(108, 122, 137));
         txtWeight1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtWeight1ActionPerformed(evt);
@@ -315,8 +333,10 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("CarPart Producing Catalog");
 
+        txtWeight2.setBackground(new java.awt.Color(108, 122, 137));
         txtWeight2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtWeight2ActionPerformed(evt);
@@ -324,8 +344,10 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Part Name");
 
+        txtWeight3.setBackground(new java.awt.Color(108, 122, 137));
         txtWeight3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtWeight3ActionPerformed(evt);
@@ -333,11 +355,14 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Material1");
 
         jLabel14.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Mweight1");
 
+        txtLoc.setBackground(new java.awt.Color(108, 122, 137));
         txtLoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLocActionPerformed(evt);
@@ -345,14 +370,18 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel15.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Mweight2");
 
         jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Weight");
 
         jLabel16.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Mweight3");
 
+        txtWeight.setBackground(new java.awt.Color(108, 122, 137));
         txtWeight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtWeightActionPerformed(evt);
@@ -360,8 +389,10 @@ public class PartProducingPanel extends javax.swing.JPanel {
         });
 
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Part Cost");
 
+        exitBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         exitBtn.setText("Exit");
         exitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -561,34 +592,188 @@ public class PartProducingPanel extends javax.swing.JPanel {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         DefaultTableModel jModel=(DefaultTableModel)jTable1.getModel();
         int slctRow=jTable1.getSelectedRow();
-        txtName.setText(jModel.getValueAt(slctRow, 1).toString());
-        txtLoc.setText(jModel.getValueAt(slctRow, 2).toString());
-        txtWeight.setText(jModel.getValueAt(slctRow, 3).toString());
+        
+        txtName.setText(jModel.getValueAt(slctRow, 0).toString());
+        txtLoc.setText(jModel.getValueAt(slctRow, 1).toString());
+        txtWeight.setText(jModel.getValueAt(slctRow, 2).toString());
 
-        //txtWeight1.setText(jModel.getValueAt(slctRow, 4).toString());
-        //txtWeight2.setText(jModel.getValueAt(slctRow, 5).toString());
-        //txtWeight.setText(jModel.getValueAt(slctRow, 6).toString());
+        txtWeight1.setText(jModel.getValueAt(slctRow, 3).toString());
+        
+        if(null!=jModel.getValueAt(slctRow, 4))
+        {
+            txtWeight2.setText(jModel.getValueAt(slctRow, 4).toString());
+        }
+        else
+        {
+            txtWeight2.setText("");
+        }
+        
+        if(null!=jModel.getValueAt(slctRow, 5))
+        {
+            txtWeight3.setText(jModel.getValueAt(slctRow, 5).toString());
+        }
+        else
+        {
+            txtWeight3.setText("");
+        }
 
-        txtCost.setText(jModel.getValueAt(slctRow, 7).toString());
+        txtCost.setText(jModel.getValueAt(slctRow, 6).toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void newBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBtnActionPerformed
-
+        ArrayList<StorageMaterial> storagelist=new ArrayList();
+        
         try
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
             sqlConn=DriverManager.getConnection(dataConn,username,password);
+            
+            PreparedStatement storageps=sqlConn.prepareStatement("select * from StorageMaterial");
+            ResultSet sr=storageps.executeQuery();
+            
+            while(sr.next())
+            {
+                StorageMaterial tempm = new StorageMaterial();
+                tempm.setMaterialName(sr.getString("MaterialName"));
+                tempm.setWeight(sr.getDouble("Weight"));
+                tempm.setTotalPrice(sr.getDouble("TotalPrice"));
+                tempm.setUnitPrice(sr.getDouble("UnitPrice"));  
+                
+                storagelist.add(tempm);
+            }
+            
+            String mw1s=txtWeight1.getText();
+            String mw2s=txtWeight2.getText();
+            String mw3s=txtWeight3.getText();
+            
+            double mw1,mw2,mw3,cmw1,cmw2,cmw3;
+            
+            String m1=(String) mBox1.getSelectedItem();
+            String m2=(String) mBox2.getSelectedItem();
+            String m3=(String) mBox3.getSelectedItem();
+            
+            if(!mw1s.isEmpty())
+            {
+                mw1=Double.parseDouble(mw1s);
+                for (StorageMaterial m:storagelist)
+                {
+                    if (m.getMaterialName().equals(m1))
+                    {
+                        cmw1=m.getWeight();
+                        if(cmw1<mw1)
+                        {
+                            txtWeight1.setText("");
+                            JOptionPane.showMessageDialog(this, "Not Sufficient Material1");
+                            return;
+                        }
+                        else
+                        {
+                            PreparedStatement updatepp=sqlConn.prepareStatement("update StorageMaterial set Weight=? where MaterialName =?");
+                            updatepp.setString(2, m1);
+                            updatepp.setString(1, String.valueOf(cmw1-mw1));
+                            updatepp.executeUpdate();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                mw1=0;   
+            }
+            
+             if(!mw2s.isEmpty())
+            {
+                mw2=Double.parseDouble(mw2s);
+                for (StorageMaterial m:storagelist)
+                {
+                    if (m.getMaterialName().equals(m2))
+                    { 
+                        cmw2=m.getWeight();
+                        if(cmw2<mw2)
+                        {
+                            txtWeight2.setText("");
+                            JOptionPane.showMessageDialog(this, "Not Sufficient Material2");
+                            return;
+                        }
+                        else
+                        {
+                            PreparedStatement updatepp=sqlConn.prepareStatement("update StorageMaterial set Weight=? where MaterialName =?");
+                            updatepp.setString(2, m2);
+                            updatepp.setString(1, String.valueOf(cmw2-mw2));
+                            updatepp.executeUpdate();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                mw2=0;   
+            }
+             
+             
+              if(!mw3s.isEmpty())
+            {
+                mw3=Double.parseDouble(mw3s);
+                for (StorageMaterial m:storagelist)
+                {
+                    if (m.getMaterialName().equals(m3))
+                    {
+                        cmw3=m.getWeight();
+                        if(cmw3<mw3)
+                        {
+                            txtWeight3.setText("");
+                            JOptionPane.showMessageDialog(this, "Not Sufficient Material3");
+                            return;
+                        }
+                        else
+                        {
+                            PreparedStatement updatepp=sqlConn.prepareStatement("update StorageMaterial set Weight=? where MaterialName =?");
+                            updatepp.setString(2, m3);
+                            updatepp.setString(1, String.valueOf(cmw3-mw3));
+                            updatepp.executeUpdate();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                mw3=0;   
+            }
+            
+            
+            
+            
+            
             pstPP=sqlConn.prepareStatement("INSERT INTO CarParts(PartName,Location,Weight,Material1,Material2,Material3,"
-                + "Mweight1,Mweight2,Mweight3,Partcost) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                + "Mweight1,Mweight2,Mweight3,Partcost) VALUES (?,?,?,?,?,?,?,?,?,?)"); 
 
+            
+            
             pstPP.setString(1,txtName.getText());
             pstPP.setString(2,txtLoc.getText());
             pstPP.setString(3,txtWeight.getText());
-
+            
             pstPP.setString(4, (String) mBox1.getSelectedItem());
-            pstPP.setString(5, (String) mBox2.getSelectedItem());
+            
+            if(!m2.equals("select material"))
+            {
+                pstPP.setString(5, (String) mBox2.getSelectedItem());
+            }
+            else
+            {
+                pstPP.setString(5, null);
+            }
+            
             pstPP.setString(6, (String) mBox3.getSelectedItem());
-
+            if(!m3.equals("select material"))
+            {
+                pstPP.setString(6, (String) mBox2.getSelectedItem());
+            }
+            else
+            {
+                pstPP.setString(6, null);
+            }
+            
             pstPP.setString(7,txtWeight1.getText());
 
             if(txtWeight2.getText().equals(""))
@@ -634,7 +819,14 @@ public class PartProducingPanel extends javax.swing.JPanel {
             java.util.logging.Logger.getLogger(PartProducingPanel.class.getName()).log(java.util.logging.Level.SEVERE,null,ex);
             JOptionPane.showMessageDialog(this, "SQLEx");
         }
-
+        
+        try {
+            updateDBforSM();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PartProducingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PartProducingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_newBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
@@ -645,42 +837,44 @@ public class PartProducingPanel extends javax.swing.JPanel {
         try
         {
 
-            thisNum=Integer.parseInt(jModel.getValueAt(slctRow, 0).toString());
+            String updatename= (String) jModel.getValueAt(slctRow, 0);
             Class.forName("com.mysql.cj.jdbc.Driver");
             sqlConn=DriverManager.getConnection(dataConn,username,password);
 
-            pstPP=sqlConn.prepareStatement("update CarParts set PartName =?,Location =?,Weight =?,Material1 =?,Material2 =?,"
-                + "Material3 =?,mWeight1 =?,mWeight2 =? mWeight3=? where PartName =?");
+            pstPP=sqlConn.prepareStatement("update CarParts set Location =?,Weight =?,Material1 =?,Material2 =?,"
+                + "Material3 =?,mWeight1 =?,mWeight2 =?,mWeight3=?,PartCost=? where PartName =?");
 
-            pstPP.setString(1,txtName.getText());
-            pstPP.setString(2,txtLoc.getText());
-            pstPP.setString(3,txtWeight.getText());
+            //pstPP.setString(1,txtName.getText());
+            pstPP.setString(1,txtLoc.getText());
+            pstPP.setString(2,txtWeight.getText());
 
-            pstPP.setString(4, (String) mBox1.getSelectedItem());
-            pstPP.setString(5, (String) mBox2.getSelectedItem());
-            pstPP.setString(6, (String) mBox3.getSelectedItem());
+            pstPP.setString(3, (String) mBox1.getSelectedItem());
+            pstPP.setString(4, (String) mBox2.getSelectedItem());
+            pstPP.setString(5, (String) mBox3.getSelectedItem());
 
-            pstPP.setString(7,txtWeight1.getText());
+            pstPP.setString(6,txtWeight1.getText());
 
             if(txtWeight2.getText().equals(""))
+            {
+                pstPP.setString(7,"0");
+            }
+            else
+            {
+                pstPP.setString(7,txtWeight2.getText());
+            }
+
+            if(txtWeight3.getText().equals(""))
             {
                 pstPP.setString(8,"0");
             }
             else
             {
-                pstPP.setString(8,txtWeight2.getText());
+                pstPP.setString(8,txtWeight3.getText());
             }
 
-            if(txtWeight3.getText().equals(""))
-            {
-                pstPP.setString(9,"0");
-            }
-            else
-            {
-                pstPP.setString(9,txtWeight3.getText());
-            }
-
-            pstPP.setString(10, txtCost.getText());
+            pstPP.setString(9, txtCost.getText());
+            pstPP.setString(10, updatename);
+            
             pstPP.executeUpdate();// Use set to set the '?' as parameters in the declaration
 
             txtName.setText("");
@@ -801,6 +995,19 @@ public class PartProducingPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,ex);
         }
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConn=DriverManager.getConnection(dataConn,username,password);
+            pstSM=sqlConn.prepareStatement("delete from StorageMaterial");
+            pstSM.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PartProducingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PartProducingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
         for(StorageMaterial sm:SMList)
         {
             sm.setUnitPrice(sm.getTotalPrice()/sm.getWeight());
@@ -831,6 +1038,7 @@ public class PartProducingPanel extends javax.swing.JPanel {
 
         try {
             updateDBforSM();
+            updateDBforPP();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PartProducingFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -863,7 +1071,8 @@ public class PartProducingPanel extends javax.swing.JPanel {
         thisframe =new JFrame("Exit");
         if(JOptionPane.showConfirmDialog(thisframe,"Confirm If You Want To Exit","MySQL Connector",JOptionPane.YES_OPTION)==JOptionPane.YES_OPTION)
         {
-            System.exit(0);
+            thisframe.dispose();
+            //System.exit(0);
         }
     }//GEN-LAST:event_exitBtnActionPerformed
 

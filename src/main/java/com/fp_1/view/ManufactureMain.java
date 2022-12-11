@@ -8,6 +8,7 @@ import com.fp_1.view.Assemble.AssemblePanel;
 import com.fp_1.view.Dealership.WholeCarPurchase;
 import com.fp_1.view.PartPurchasing.PartPurchaseJPanel;
 import java.awt.ComponentOrientation;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,8 +19,25 @@ public class ManufactureMain extends javax.swing.JFrame {
     /**
      * Creates new form mainJFrame
      */
-    public ManufactureMain() {
+    public String loginID;
+    public ManufactureMain(String loginid) {
         initComponents();
+        switch(loginid){
+            case "PP":
+                jToggleButton3.setVisible(false);
+                
+                break;
+            case "AS":
+                jToggleButton1.setVisible(false);
+                break;
+            case "Admin":
+
+                break;
+        }
+    }
+
+    private ManufactureMain() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -40,10 +58,11 @@ public class ManufactureMain extends javax.swing.JFrame {
         jToggleButton5 = new javax.swing.JToggleButton();
         MainPagePanel = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         SplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        jPanel2.setBackground(new java.awt.Color(248, 148, 6));
         jPanel2.setMinimumSize(new java.awt.Dimension(100, 70));
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 50));
         jPanel2.setSize(new java.awt.Dimension(100, 50));
@@ -114,6 +133,8 @@ public class ManufactureMain extends javax.swing.JFrame {
         );
 
         SplitPane.setTopComponent(jPanel2);
+
+        MainPagePanel.setBackground(new java.awt.Color(44, 62, 80));
 
         javax.swing.GroupLayout MainPagePanelLayout = new javax.swing.GroupLayout(MainPagePanel);
         MainPagePanel.setLayout(MainPagePanelLayout);

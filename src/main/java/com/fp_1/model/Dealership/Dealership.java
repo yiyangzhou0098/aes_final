@@ -10,6 +10,15 @@ package com.fp_1.model.Dealership;
  */
 public class Dealership {
 
+    int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
     int VIN;
     String DriveType;
     String Car;

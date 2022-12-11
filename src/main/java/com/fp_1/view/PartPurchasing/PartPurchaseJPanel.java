@@ -179,6 +179,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         refreshButton = new javax.swing.JButton();
@@ -199,11 +200,11 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
         perpriceField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         forcarField = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         searchBtn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(44, 62, 80));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 570));
 
@@ -235,6 +236,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Search By ");
 
         searchBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "PartName", "CarType", " " }));
@@ -253,6 +256,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("ID");
 
         idField.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +266,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Part Name");
 
         partnameField.addActionListener(new java.awt.event.ActionListener() {
@@ -269,10 +276,14 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Status");
 
         statusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Available", "Unavailable", "Awaiting" }));
 
+        jLabel5.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Warehouse ID");
 
         warehouseField.addActionListener(new java.awt.event.ActionListener() {
@@ -281,6 +292,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Number");
 
         numberField.addActionListener(new java.awt.event.ActionListener() {
@@ -289,6 +302,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Per Price");
 
         perpriceField.addActionListener(new java.awt.event.ActionListener() {
@@ -297,6 +312,8 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("For Car");
 
         forcarField.addActionListener(new java.awt.event.ActionListener() {
@@ -304,8 +321,6 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
                 forcarFieldActionPerformed(evt);
             }
         });
-
-        jLabel9.setText("Create Time");
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -390,9 +405,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(deleteButton))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel9))
+                                    .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(forcarField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(29, 29, 29))))))
@@ -426,9 +439,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
+                        .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
@@ -498,12 +509,6 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             return;
         }
 
-        //Date createtime = createtimeDate.getDate();
-        // todo 判断是否空
-        /*if (createtime.equals("")) {
-            JOptionPane.showMessageDialog(this, "Create time can not be empty");
-            return;
-        }*/
 
         short status = -1;
         String s_status = (String) statusBox.getSelectedItem();
@@ -562,6 +567,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             return;
         }
 
+        Date date1 = new Date();
         PartPurchase partPurchase = new PartPurchase();
         partPurchase.setID(id);
         partPurchase.setPartName(partname);
@@ -571,6 +577,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
         partPurchase.setNumber(number);
         partPurchase.setPerPrice(perprice);
         partPurchase.setForCar(forcar);
+        partPurchase.setCreateTime(date1);
 
         partPurchasingDao = new PartPurchasingDao();
         if (partPurchasingDao.add(partPurchase)) {
@@ -614,7 +621,6 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
             return;
         }
         int result = JOptionPane.showConfirmDialog(null, "Sure to delete?");
-        // 判断用户是否点击
 
         if (result == JOptionPane.OK_OPTION) {
             int id = Integer.valueOf(table.getValueAt(
@@ -632,6 +638,7 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField forcarField;
     private javax.swing.JTextField idField;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -640,7 +647,6 @@ public class PartPurchaseJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField numberField;
     private javax.swing.JTextField partnameField;

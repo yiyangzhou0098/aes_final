@@ -4,6 +4,12 @@
  */
 package com.fp_1.view.SysAdmin;
 
+import com.fp_1.view.Dealership.WholeCarPurchase;
+import com.fp_1.view.Dealership.WholeCarPurchaseManage;
+import com.fp_1.view.ManufactureMain;
+import com.fp_1.view.Supplier.SupplierMainFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kai
@@ -13,8 +19,14 @@ public class SysAdminFrame extends javax.swing.JFrame {
     /**
      * Creates new form SysAdminFrame
      */
-    public SysAdminFrame() {
+    public String loginID;
+    public SysAdminFrame(String loginID) {
+        JOptionPane.showMessageDialog(this,loginID);
         initComponents();
+    }
+
+    private SysAdminFrame() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -26,19 +38,51 @@ public class SysAdminFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        accountBtn = new javax.swing.JButton();
+        supplierBtn = new javax.swing.JButton();
+        manuBtn = new javax.swing.JButton();
+        dealerBtn = new javax.swing.JButton();
+        cusBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel2.setBackground(new java.awt.Color(248, 148, 6));
 
-        jButton1.setText("Account Edit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        accountBtn.setText("Account Edit");
+        accountBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                accountBtnActionPerformed(evt);
+            }
+        });
+
+        supplierBtn.setText("Supplier");
+        supplierBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierBtnActionPerformed(evt);
+            }
+        });
+
+        manuBtn.setText("Manufacture");
+        manuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manuBtnActionPerformed(evt);
+            }
+        });
+
+        dealerBtn.setText("Dealership");
+        dealerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dealerBtnActionPerformed(evt);
+            }
+        });
+
+        cusBtn.setText("Customer");
+        cusBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cusBtnActionPerformed(evt);
             }
         });
 
@@ -46,27 +90,42 @@ public class SysAdminFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(accountBtn)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(supplierBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(manuBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dealerBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cusBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(accountBtn)
+                .addGap(42, 42, 42)
+                .addComponent(supplierBtn)
+                .addGap(38, 38, 38)
+                .addComponent(manuBtn)
+                .addGap(41, 41, 41)
+                .addComponent(dealerBtn)
+                .addGap(43, 43, 43)
+                .addComponent(cusBtn)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(44, 62, 80));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGap(0, 809, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -80,8 +139,7 @@ public class SysAdminFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,10 +149,30 @@ public class SysAdminFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void accountBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountBtnActionPerformed
         UserEditPanel Ppanel=new UserEditPanel();
         jSplitPane1.setRightComponent(Ppanel);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_accountBtnActionPerformed
+
+    private void supplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierBtnActionPerformed
+        SupplierMainFrame supplierFrame=new SupplierMainFrame("Admin");
+        supplierFrame.setVisible(true);
+    }//GEN-LAST:event_supplierBtnActionPerformed
+
+    private void manuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manuBtnActionPerformed
+        ManufactureMain mm=new ManufactureMain("Admin");
+        mm.setVisible(true);
+    }//GEN-LAST:event_manuBtnActionPerformed
+
+    private void dealerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dealerBtnActionPerformed
+        WholeCarPurchaseManage wp=new WholeCarPurchaseManage();
+        wp.setVisible(true);
+    }//GEN-LAST:event_dealerBtnActionPerformed
+
+    private void cusBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cusBtnActionPerformed
+        WholeCarPurchase wp=new WholeCarPurchase("Admin");
+        wp.setVisible(true);
+    }//GEN-LAST:event_cusBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,9 +210,13 @@ public class SysAdminFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton accountBtn;
+    private javax.swing.JButton cusBtn;
+    private javax.swing.JButton dealerBtn;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton manuBtn;
+    private javax.swing.JButton supplierBtn;
     // End of variables declaration//GEN-END:variables
 }

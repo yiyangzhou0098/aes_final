@@ -4,6 +4,11 @@
  */
 package com.fp_1.view.Login;
 
+import com.fp_1.view.Dealership.WholeCarPurchase;
+import com.fp_1.view.Dealership.WholeCarPurchaseManage;
+import com.fp_1.view.ManufactureMain;
+import com.fp_1.view.Supplier.SupplierMainFrame;
+import com.fp_1.view.SysAdmin.SysAdminFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,118 +47,86 @@ public class LoginFrame extends javax.swing.JFrame {
         pwPassword = new javax.swing.JPasswordField();
         clrBtn = new javax.swing.JButton();
         regBtn = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 102));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        loginBtn.setBackground(new java.awt.Color(0, 153, 153));
+        loginBtn.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         loginBtn.setText("Login");
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(497, 292, 107, 50));
 
+        clrBtn1.setBackground(new java.awt.Color(0, 153, 153));
+        clrBtn1.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         clrBtn1.setText("Exit");
         clrBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clrBtn1ActionPerformed(evt);
             }
         });
+        getContentPane().add(clrBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 107, 45));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lao MN", 3, 48)); // NOI18N
         jLabel1.setText("Login ");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("UserName");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 185, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Password");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 232, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
-        jLabel4.setText("Select Your Identity");
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Select Identity");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 138, -1, -1));
 
-        idBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier-MP", "Supplier-PP", "Supplier-PS", "System Admin", " " }));
+        idBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier-MP", "Supplier-PP", "Supplier-PS", "Supplier-Admin", "Dealer-Admin", "Customer", "Manufacture-PP", "Manufacture-AS", "Manufacture-Admin", "System Admin", " " }));
         idBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idBoxActionPerformed(evt);
             }
         });
+        getContentPane().add(idBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(391, 138, 213, 29));
+        getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 185, 269, 29));
+        getContentPane().add(pwPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 232, 269, 29));
 
+        clrBtn.setBackground(new java.awt.Color(0, 153, 153));
+        clrBtn.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         clrBtn.setText("Clear");
         clrBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clrBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(clrBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 292, 107, 45));
 
+        regBtn.setBackground(new java.awt.Color(0, 153, 153));
+        regBtn.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         regBtn.setText("Register");
         regBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(regBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 292, 107, 45));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(377, 377, 377))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(clrBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(clrBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(idBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pwPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 196, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(idBox)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUser)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pwPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clrBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
-                .addComponent(clrBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(124, 124, 124))
-        );
+        jLabel8.setBackground(new java.awt.Color(0, 102, 102));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon("/Users/kai/Downloads/255d80e4f6a6831606518e50364a3100.jpeg")); // NOI18N
+        jLabel8.setText("jLabel8");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -166,11 +139,7 @@ public class LoginFrame extends javax.swing.JFrame {
         Object idslct;
         idslct=idBox.getSelectedItem();
 
-        //sysAdminFrame sysAdminFrame=new sysAdminFrame(pDirectory,dDirectory,uDirectory,comDirectory,eHistory,hDirectory,cityDirectory,houseDirectory,this.loginUser);
-        //comAdminFrame comAdminFrame=new comAdminFrame(pDirectory,dDirectory,comDirectory,eHistory,hDirectory,cityDirectory,houseDirectory);
-        //hosAdminFrame hosAdminFrame=new hosAdminFrame(pDirectory,dDirectory,comDirectory,eHistory,hDirectory,cityDirectory,houseDirectory);
 
-        //patientFrame patientFrame=new patientFrame(pDirectory,dDirectory,hDirectory,eHistory);
 
         //JOptionPane.showMessageDialog(this, idslct.toString());
         if (idslct.toString()=="System Admin"){
@@ -181,8 +150,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 txtUser.setText("");
                 pwPassword.setText("");
 
-                
-                //sysAdminFrame.setVisible(true);
+                SysAdminFrame sysadminFrame=new SysAdminFrame("SysAdmin");
+                sysadminFrame.setVisible(true);
             }
             else{
                 JOptionPane.showMessageDialog(this, "No Such SysAdmin In System");
@@ -195,32 +164,133 @@ public class LoginFrame extends javax.swing.JFrame {
 
         if (idslct.toString()=="Supplier-MP"){
             boolean isin=false;
-            //sysAdminFrame.setUserIdentity("Com");
-
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+                txtUser.setText("");
+                pwPassword.setText("");
+                return;
+            }
+            SupplierMainFrame supplierFrame=new SupplierMainFrame("MaterialPurchase");
+            supplierFrame.setVisible(true);
 
             //this.setVisible(false);
         }
 
         if (idslct.toString()=="Supplier-PP"){
             boolean isin=false;
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+                txtUser.setText("");
+                pwPassword.setText("");
+                return;
+            }
             //sysAdminFrame.setUserIdentity("Hos");
             //JOptionPane.showMessageDialog(this, idslct.toString());
-            if (!isin){
+            SupplierMainFrame supplierFrame=new SupplierMainFrame("PartProducing");
+            supplierFrame.setVisible(true);
+            /*if (!isin){
                 JOptionPane.showMessageDialog(this, "No Such HosAdmin In System");
                 txtUser.setText("");
                 pwPassword.setText("");
-            }
+            }*/
             //this.setVisible(false);
         }
 
         if (idslct.toString()=="Supplier-PS"){
             boolean isin=false;
-
-            if (!isin){
-                JOptionPane.showMessageDialog(this, "No Such Patient In System");
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
                 txtUser.setText("");
                 pwPassword.setText("");
+                return;
             }
+            SupplierMainFrame supplierFrame=new SupplierMainFrame("PartSelling");
+            supplierFrame.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        if (idslct.toString()=="Supplier-Admin"){
+            boolean isin=false;
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+                txtUser.setText("");
+                pwPassword.setText("");
+                return;
+            }
+            SupplierMainFrame supplierFrame=new SupplierMainFrame("Admin");
+            supplierFrame.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        if (idslct.toString()=="Dealer-Admin"){
+            boolean isin=false;
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+                txtUser.setText("");
+                pwPassword.setText("");
+                return;
+            }
+            WholeCarPurchaseManage wp=new WholeCarPurchaseManage();
+            wp.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        if (idslct.toString()=="Customer"){
+            boolean isin=false;
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+                txtUser.setText("");
+                pwPassword.setText("");
+                return;
+            }
+            WholeCarPurchase wp=new WholeCarPurchase(loginNa);
+            wp.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        if (idslct.toString()=="Manufacture-Admin"){
+            boolean isin=false;
+            if (loginPw.equals("aaaa"))
+            {
+                JOptionPane.showMessageDialog(this, "Wrong Password!");
+                txtUser.setText("");
+                pwPassword.setText("");
+                return;
+            }
+            ManufactureMain mm=new ManufactureMain("Admin");
+            mm.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        if (idslct.toString()=="Manufacture-PP"){
+            boolean isin=false;
+
+            ManufactureMain mm=new ManufactureMain("PP");
+            mm.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        if (idslct.toString()=="Manufacture-AS"){
+            boolean isin=false;
+
+            ManufactureMain mm=new ManufactureMain("AS");
+            mm.setVisible(true);
+            //this.setVisible(false);
+        }
+        
+        
+        
+        if (idslct.toString()=="Manufacture-Admin"){
+            boolean isin=false;
+
+            ManufactureMain mm=new ManufactureMain("AS");
+            mm.setVisible(true);
             //this.setVisible(false);
         }
 
@@ -312,6 +382,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField pwPassword;
     private javax.swing.JButton regBtn;

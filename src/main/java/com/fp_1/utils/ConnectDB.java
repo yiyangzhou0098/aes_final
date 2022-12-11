@@ -17,9 +17,9 @@ import java.sql.SQLException;
 public class ConnectDB {
 
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String URL = "jdbc:mysql://localhost:3306/test_departments";
+    public static final String URL = "jdbc:mysql://localhost:3306/connector";
     public static final String USER = "root";
-    public static final String PWD = "123456789";
+    public static final String PWD = "mysql0226";
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -105,6 +105,20 @@ public class ConnectDB {
             e.printStackTrace();
         }
         return rs;
+    }
+    
+    public void delete(String sql, String deleteBy) {
+        con = getCon();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, deleteBy);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+        }
+        
     }
 
 }

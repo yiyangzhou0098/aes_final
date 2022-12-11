@@ -4,10 +4,28 @@
  */
 package com.fp_1.view.Supplier;
 
+import com.fp_1.model.statistics.Statitem;
+import com.fp_1.view.ChartPainting.AnyChartPanel;
+import com.fp_1.view.ChartPainting.ChartPaintPanel;
+import com.fp_1.view.Customer.CustomerMainFrame;
 import com.fp_1.view.MaterialPurchasing.MaterialPurchasePanel;
 import com.fp_1.view.PartProducingFrame.PartProducingPanel;
+import com.fp_1.view.PartPurchasing.PartPurchaseJPanel;
+import com.fp_1.view.PartPurchasing.PartSellJPanel;
 import com.fp_1.view.PartSelling.PartSellPanel;
+import java.awt.Component;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,8 +36,36 @@ public class SupplierMainFrame extends javax.swing.JFrame {
     /**
      * Creates new form SupplierMainFrame
      */
-    public SupplierMainFrame() {
+    public String loginID;
+    private static final String username="root";
+    private static final String password="mysql0226";
+    private static final String dataConn="jdbc:mysql://localhost:3306/connector";
+    
+    public SupplierMainFrame(String loginID) {
+        
         initComponents();
+
+        switch(loginID){
+            case "MaterialPurchase":
+                ppBtn.setVisible(false);
+                psBtn.setVisible(false);
+                break;
+            case "PartProducing":
+                mpBtn.setVisible(false);
+                psBtn.setVisible(false);
+                break;
+            case "PartSelling":
+                ppBtn.setVisible(false);
+                mpBtn.setVisible(false);
+                break;
+            case "Admin":
+                break;
+        }
+    }
+
+    
+    private SupplierMainFrame() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -34,15 +80,22 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         splitPane = new javax.swing.JSplitPane();
         jPanel3 = new javax.swing.JPanel();
         mpBtn = new javax.swing.JButton();
-        mpBtn1 = new javax.swing.JButton();
-        mpBtn2 = new javax.swing.JButton();
+        ppBtn = new javax.swing.JButton();
+        psBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        splitPane.setBackground(new java.awt.Color(44, 62, 80));
         splitPane.setDividerLocation(40);
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        jPanel3.setBackground(new java.awt.Color(248, 148, 6));
+
+        mpBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        mpBtn.setForeground(new java.awt.Color(44, 62, 80));
         mpBtn.setText("Material Purchase");
         mpBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,17 +103,29 @@ public class SupplierMainFrame extends javax.swing.JFrame {
             }
         });
 
-        mpBtn1.setText("Part Producing");
-        mpBtn1.addActionListener(new java.awt.event.ActionListener() {
+        ppBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        ppBtn.setForeground(new java.awt.Color(44, 62, 80));
+        ppBtn.setText("Part Producing");
+        ppBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mpBtn1ActionPerformed(evt);
+                ppBtnActionPerformed(evt);
             }
         });
 
-        mpBtn2.setText("Part Selling");
-        mpBtn2.addActionListener(new java.awt.event.ActionListener() {
+        psBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        psBtn.setForeground(new java.awt.Color(44, 62, 80));
+        psBtn.setText("Part Selling");
+        psBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mpBtn2ActionPerformed(evt);
+                psBtnActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButton1.setText("Storage Chart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -72,10 +137,12 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(mpBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(mpBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ppBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(mpBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addComponent(psBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(jButton1)
+                .addContainerGap(213, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,36 +150,30 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mpBtn)
-                    .addComponent(mpBtn1)
-                    .addComponent(mpBtn2))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addComponent(ppBtn)
+                    .addComponent(psBtn)
+                    .addComponent(jButton1))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         splitPane.setTopComponent(jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(44, 62, 80));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 945, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 605, Short.MAX_VALUE)
+            .addGap(0, 606, Short.MAX_VALUE)
         );
 
         splitPane.setRightComponent(jPanel4);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane)
-        );
+        getContentPane().add(splitPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -122,15 +183,70 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         splitPane.setRightComponent(mp);
     }//GEN-LAST:event_mpBtnActionPerformed
 
-    private void mpBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpBtn1ActionPerformed
+    private void ppBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppBtnActionPerformed
         PartProducingPanel pp=new PartProducingPanel();
         splitPane.setRightComponent(pp);
-    }//GEN-LAST:event_mpBtn1ActionPerformed
+    }//GEN-LAST:event_ppBtnActionPerformed
 
-    private void mpBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpBtn2ActionPerformed
-        PartSellPanel ps=new PartSellPanel();
+    private void psBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_psBtnActionPerformed
+        PartSellJPanel ps=new PartSellJPanel();
         splitPane.setRightComponent(ps);
-    }//GEN-LAST:event_mpBtn2ActionPerformed
+    }//GEN-LAST:event_psBtnActionPerformed
+    private Connection sqlConn=null;
+    private PreparedStatement pstSM=null;
+    private ResultSet rsSM=null;
+    
+    public void paintchart() throws ClassNotFoundException, SQLException{
+
+        ArrayList<Statitem> statlist=new ArrayList<Statitem>();
+        Statitem temp=new Statitem();
+        
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        sqlConn=DriverManager.getConnection(dataConn,username,password);
+        
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConn=DriverManager.getConnection(dataConn,username,password);
+            
+            pstSM=sqlConn.prepareStatement("select * from StorageMaterial");
+
+            rsSM=pstSM.executeQuery();
+
+            
+            while(rsSM.next())
+            {
+                temp.setName(rsSM.getString("MaterialName"));
+                temp.setNum(rsSM.getDouble("Weight"));
+                
+                statlist.add(temp);
+                temp=new Statitem();//need to new or fixed!!
+                
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null,ex);
+        }
+        
+        
+        AnyChartPanel chartpaintpanel=new AnyChartPanel(statlist);
+        //JOptionPane.showMessageDialog(this, statlist.size());
+        splitPane.setRightComponent(chartpaintpanel);
+        }
+    
+       
+            
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            paintchart();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SupplierMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,14 +265,15 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -168,11 +285,12 @@ public class SupplierMainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton mpBtn;
-    private javax.swing.JButton mpBtn1;
-    private javax.swing.JButton mpBtn2;
+    private javax.swing.JButton ppBtn;
+    private javax.swing.JButton psBtn;
     private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,6 +11,7 @@ package com.fp_1.dao.Dealership;
 
 import java.sql.ResultSet;
 import com.fp_1.model.Dealership.Dealership;
+import com.fp_1.model.WholeCarPurchase.CarPurchase;
 import com.fp_1.utils.ConnectDB;
 import java.util.List;
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ public class DealershipDao {
     ConnectDB util = new ConnectDB();
 
     public boolean add(Dealership dealership) {
-        return util.update("insert into Dealership(DriveType,Car,EngineType,Transmission,Price,Location,Photopath) values(?,?,?,?,?,?,?)",
+        return util.update("insert into Dealership(DriveType,Car,EngineType,Transmission,Price,Location,Photopath,VIN) values(?,?,?,?,?,?,?,?)",
                 dealership.getDriveType(),dealership.getCar(),dealership.getEngineType(),
-                dealership.getTransmission(),dealership.getPrice(),dealership.getLocation(),dealership.getPhotopath()
+                dealership.getTransmission(),dealership.getPrice(),dealership.getLocation(),dealership.getPhotopath(),
+                dealership.getVIN()
                 ) > 0;
     }
 
@@ -32,65 +34,82 @@ public class DealershipDao {
         return util.update("delete from Dealership where ID=?", id) > 0;
     }
 
-//    public boolean update(Assemble assemble) {
-//        return util.update("update Assemble set Status=?,CreateTime=?,Car=? where AssembleID=?",
-//                assemble.getStatus(),assemble.getCreateTime(), assemble.getCar(), assemble.getAssembleID()) > 0;
+    public boolean update(Dealership dealership) {
+        return util.update("update Dealership set DriveType=?,Car=?,EngineType=?,Transmission=?,Price=?,Location=?,Photopath=?,VIN=? where ID=?",
+                dealership.getDriveType(),dealership.getCar(),dealership.getEngineType(),
+                dealership.getTransmission(),dealership.getPrice(),dealership.getLocation(),dealership.getPhotopath(),
+                dealership.getVIN(),dealership.getID()
+                ) > 0;
+    }
+
+    public List<Dealership> QueryAll() {
+        return _listdealership(util.query("select * from Dealership"));
+    }
+    
+    public Dealership QueryByVIN(int VIN) {
+        return _dealership(util.query("select * from Dealership where VIN=?", VIN));
+    }
+
+    public Dealership QueryById(int id) {
+        return _dealership(util.query("select * from Dealership where ID=?", id));
+    }
+    
+    public List<Dealership> QueryByCar(String car) {
+        return _listdealership(util.query("select * from Dealership where Car like concat('%',?,'%')", car));
+    }
+    
+    public List<Dealership> QueryByPriceBigger(int price) {
+        return _listdealership(util.query("select * from Dealership where price >= ?", price));
+    }
+    
+    public List<Dealership> QueryByPriceSmaller(int price) {
+        return _listdealership(util.query("select * from Dealership where price <= ?", price));
+    }
+
+//    public List<Assemble> QueryByName(String name) {
+//        return _listassemble(util.query("select * from Assemble where PartName like concat('%',?,'%')", name));
 //    }
 //
-//    public List<Assemble> QueryAll() {
-//        return _listassemble(util.query("select * from Assemble"));
-//    }
+    private Dealership _dealership(ResultSet rs) {
+        Dealership dealership = null;
+        try {
+            if (rs.next()) {
+                dealership = new Dealership();
+                dealership.setVIN(rs.getInt("VIN"));
+                dealership.setPhotopath(rs.getString("Photopath"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+        } finally {
+            util.closeAll();
+        }
+        return dealership;
+    }
 //
-//    public List<Assemble> QueryById(String id) {
-//        return _listassemble(util.query("select * from Assemble where ID like concat('%',?,'%')", id));
-//    }
-//    
-//    public List<Assemble> QueryByCar(String car) {
-//        return _listassemble(util.query("select * from Assemble where Car like concat('%',?,'%')", car));
-//    }
-//
-////    public List<Assemble> QueryByName(String name) {
-////        return _listassemble(util.query("select * from Assemble where PartName like concat('%',?,'%')", name));
-////    }
-//
-//    private Assemble _assemble(ResultSet rs) {
-//        Assemble assemble = null;
-//        try {
-//            if (rs.next()) {
-//                assemble = new Assemble();
-//                assemble.setCar(rs.getString("Car"));
-//                assemble.setCreateTime(rs.getDate("CreateTime"));
-//                assemble.setStatus(rs.getShort("Status"));
-////                assemble.setAssembleID(rs.getInt("AssembleID"));
-//            }
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//
-//            e.printStackTrace();
-//        } finally {
-//            util.closeAll();
-//        }
-//        return assemble;
-//    }
-//
-//    private List<Assemble> _listassemble(ResultSet rs) {
-//        List<Assemble> _listassemble = new ArrayList<Assemble>();
-//        try {
-//            while (rs.next()) {
-//                Assemble assemble = new Assemble();
-//                assemble.setAssembleID(rs.getInt("AssembleID"));
-//                assemble.setStatus(rs.getShort("Status"));
-//                assemble.setCreateTime(rs.getDate("CreateTime"));
-//                assemble.setCar(rs.getString("Car"));
-//
-//                _listassemble.add(assemble);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            util.closeAll();
-//        }
-//        return _listassemble;
-//    }
+    private List<Dealership> _listdealership(ResultSet rs) {
+        List<Dealership> _listdealership = new ArrayList<Dealership>();
+        try {
+            while (rs.next()) {
+                Dealership dealership = new Dealership();
+                dealership.setDriveType(rs.getString("DriveType"));
+                dealership.setCar(rs.getString("Car"));
+                dealership.setEngineType(rs.getString("EngineType"));
+                dealership.setTransmission(rs.getString("Transmission"));
+                dealership.setPrice(rs.getFloat("Price"));
+                dealership.setLocation(rs.getString("Location"));
+                dealership.setPhotopath(rs.getString("Photopath"));
+                dealership.setVIN(rs.getInt("VIN"));
+            
+                _listdealership.add(dealership);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            util.closeAll();
+        }
+        return _listdealership;
+    }
 }
 

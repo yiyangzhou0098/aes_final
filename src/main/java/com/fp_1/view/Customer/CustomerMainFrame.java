@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.fp_1.view.Supplier;
+package com.fp_1.view.Customer;
 
 import com.fp_1.view.MaterialPurchasing.MaterialPurchasePanel;
 import com.fp_1.view.PartProducingFrame.PartProducingPanel;
@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author kai
  */
-public class SupplierMainFrame extends javax.swing.JFrame {
+public class CustomerMainFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form SupplierMainFrame
      */
-    public SupplierMainFrame() {
+    public CustomerMainFrame() {
         initComponents();
     }
 
@@ -43,21 +43,21 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         splitPane.setDividerLocation(40);
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        mpBtn.setText("Material Purchase");
+        mpBtn.setText("Car Purchase");
         mpBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mpBtnActionPerformed(evt);
             }
         });
 
-        mpBtn1.setText("Part Producing");
+        mpBtn1.setText("Order Status");
         mpBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mpBtn1ActionPerformed(evt);
             }
         });
 
-        mpBtn2.setText("Part Selling");
+        mpBtn2.setText("Customer Service");
         mpBtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mpBtn2ActionPerformed(evt);
@@ -107,7 +107,7 @@ public class SupplierMainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,13 +118,12 @@ public class SupplierMainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpBtnActionPerformed
-        MaterialPurchasePanel mp=new MaterialPurchasePanel();
-        splitPane.setRightComponent(mp);
+
     }//GEN-LAST:event_mpBtnActionPerformed
 
     private void mpBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpBtn1ActionPerformed
-        PartProducingPanel pp=new PartProducingPanel();
-        splitPane.setRightComponent(pp);
+        CustomerOrderPanel co=new CustomerOrderPanel();
+        splitPane.setRightComponent(co);
     }//GEN-LAST:event_mpBtn1ActionPerformed
 
     private void mpBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpBtn2ActionPerformed
@@ -149,20 +148,21 @@ public class SupplierMainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SupplierMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SupplierMainFrame().setVisible(true);
+                new CustomerMainFrame().setVisible(true);
             }
         });
     }

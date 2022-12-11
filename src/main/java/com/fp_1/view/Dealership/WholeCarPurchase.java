@@ -4,24 +4,140 @@
  */
 package com.fp_1.view.Dealership;
 
+import com.fp_1.dao.Assemble.AssembleDao;
+import com.fp_1.dao.Dealership.DealershipDao;
+import com.fp_1.dao.PartPurchasing.PartPurchasingDao;
+import com.fp_1.dao.WholeCarPurchase.CarPurchaseDao;
+import com.fp_1.model.Assemble.Assemble;
+import com.fp_1.model.Dealership.Dealership;
+import com.fp_1.model.WholeCarPurchase.CarPurchase;
+import java.awt.Component;
+import java.awt.Image;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author yiyangzhou
  */
 public class WholeCarPurchase extends javax.swing.JFrame {
-
+    String Username;
+    ConfirmBuying addBuyInfo;
     /**
      * Creates new form WholeCarPurchase
      */
     public WholeCarPurchase() {
         initComponents();
+        populateResultTable();
+        populateResultTable2();
+    }
+    
+    public WholeCarPurchase(String username) {
+        this.Username = username;
+        initComponents();
+        populateResultTable();
+        populateResultTable2();
+
     }
 
-    private void generatePics() {
+
+    public void populateResultTable() {
+        DealershipDao dealershipDao = new DealershipDao();
+        DefaultTableModel model = (DefaultTableModel) carTable.getModel();
+        model.getDataVector().clear();
         
+        List<Dealership> listDealership = dealershipDao.QueryAll();
+
+        for (Dealership dealership : listDealership) {
+            ImageIcon image = new ImageIcon(new ImageIcon(dealership.getPhotopath()).getImage()
+             .getScaledInstance(165, 100, Image.SCALE_SMOOTH));
+            
+            model.addRow(new Object[]{
+                image,
+                dealership.getCar(),
+                dealership.getDriveType(),
+                dealership.getEngineType(),
+                dealership.getTransmission(),
+                dealership.getPrice(),
+                dealership.getLocation(),
+
+            });
+
+        }
+        carTable.setModel(model);
+        carTable.setRowHeight(100);
+        carTable.getColumnModel().getColumn(0).setPreferredWidth(165);
     }
     
     
+    public void populateResultTable2() {
+        Username = "12345";
+        CarPurchaseDao carPurchaseDao = new CarPurchaseDao();
+        DealershipDao dealershipDao = new DealershipDao();
+        Dealership dealership = new Dealership();
+        DefaultTableModel model = (DefaultTableModel) carTable2.getModel();
+        model.getDataVector().clear();
+        
+        List<CarPurchase> listCarPurchase = carPurchaseDao.QueryByUser(this.Username);
+
+        for (CarPurchase carPurchase : listCarPurchase) {
+            dealership = dealershipDao.QueryByVIN(carPurchase.getVIN());
+            String photopath = dealership.getPhotopath();
+            
+            
+            ImageIcon image = new ImageIcon(new ImageIcon(photopath).getImage()
+             .getScaledInstance(165, 100, Image.SCALE_SMOOTH));
+            
+            model.addRow(new Object[]{
+                image,
+                carPurchase.getOrderID(),
+                carPurchase.getOrderStatus(),
+                carPurchase.getCreateTime(),
+                carPurchase.getAddress1(),
+                carPurchase.getAddress2(),
+                carPurchase.getShipment(),
+
+            });
+
+        }
+        carTable2.setModel(model);
+        carTable2.setRowHeight(100);
+        carTable2.getColumnModel().getColumn(0).setPreferredWidth(165);
+    }
+
+    
+    public void addPhotoOnTable() {
+        DefaultTableModel model = (DefaultTableModel) carTable.getModel();
+
+        carTable.setFillsViewportHeight(true);
+        carTable.getColumn("Pic").setCellRenderer(new CellRenderer());
+ 
+    }
+    
+    class CellRenderer implements TableCellRenderer {
+ 
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table,
+                Object value,
+                boolean isSelected,
+                boolean hasFocus,
+                int row,
+                int column) {
+ 
+            TableColumn tb = carTable.getColumn("Pic");
+            tb.setMaxWidth(60);
+            tb.setMinWidth(60);
+  
+            return (Component) value;
+        }
+ 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,11 +154,17 @@ public class WholeCarPurchase extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         searchBox = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        carTable = new javax.swing.JTable();
+        buyBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        carTable2 = new javax.swing.JTable();
+        cancelBtn = new javax.swing.JButton();
+        editBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(840, 800));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new java.awt.Dimension(840, 800));
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
@@ -78,18 +200,44 @@ public class WholeCarPurchase extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        carTable.setBackground(new java.awt.Color(204, 204, 204));
+        carTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"bmw_m4.png", null, null, null, null},
-                {"jg_xe.png", null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Pic", "Name", "Type", "Price", "Opt"
+                "Pic", "Car", "DriveType", "EngineType", "Transmisson", "Price", "Location"
             }
-        ));
-        jScrollPane4.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                javax.swing.Icon.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        carTable.setGridColor(new java.awt.Color(204, 204, 204));
+        jScrollPane4.setViewportView(carTable);
+
+        ImageIcon imagebuy = new ImageIcon("/Users/kai/Desktop/develop/aes_final/src/main/java/images/buy.png");
+        imagebuy.setImage(imagebuy.getImage().getScaledInstance(170, 40, Image.SCALE_DEFAULT ));
+        buyBtn.setIcon(imagebuy);
+        buyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buyBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,16 +247,17 @@ public class WholeCarPurchase extends javax.swing.JFrame {
                 .addGap(120, 120, 120)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
                 .addComponent(SearchFiled, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(41, 41, 41)
                 .addComponent(searchBtn)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(buyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(323, 323, 323))
+            .addComponent(jScrollPane4)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,13 +270,99 @@ public class WholeCarPurchase extends javax.swing.JFrame {
                     .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(buyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab3", jPanel1);
+        jTabbedPane1.addTab("Find cars", jPanel1);
 
         jScrollPane2.setMinimumSize(new java.awt.Dimension(800, 700));
-        jTabbedPane1.addTab("My Cars", jScrollPane2);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        carTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Pic", "OrderID", "OrderStatus", "CreateTime", "Address1", "Address2", "Shipment"
+            }
+        ) {
+            Class[] types = new Class [] {
+                javax.swing.Icon.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(carTable2);
+
+        ImageIcon imagecancel = new ImageIcon("/Users/kai/Desktop/develop/aes_final/src/main/java/images/cancel.png");
+        imagecancel.setImage(imagecancel.getImage().getScaledInstance(200, 40, Image.SCALE_DEFAULT ));
+        cancelBtn.setIcon(imagecancel);
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
+        ImageIcon imageedit = new ImageIcon("/Users/kai/Desktop/develop/aes_final/src/main/java/images/editorder.png");
+        imageedit.setImage(imageedit.getImage().getScaledInstance(195, 40, Image.SCALE_DEFAULT ));
+        editBtn.setIcon(imageedit);
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(146, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(216, 216, 216))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(40, 40, 40))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(294, Short.MAX_VALUE))
+        );
+
+        jScrollPane2.setViewportView(jPanel2);
+
+        jTabbedPane1.addTab("My orders", jScrollPane2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,76 +382,113 @@ public class WholeCarPurchase extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SearchFiledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchFiledActionPerformed
-
+        
     }//GEN-LAST:event_SearchFiledActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        String search_txt = SearchFiled.getText();
-        String search_type = (String) searchBox.getSelectedItem();
-        if (!search_txt.equals("Type here ...")) {
-            switch (search_type) {
-                case "ID":
-                populateTableByType("ID",search_txt);
-                break;
-                case "PartName":
-                populateTableByType("PartName",search_txt);
-                break;
-                case "CarType":
-                populateTableByType("CarType",search_txt);
-                break;
-                default:
-                return;
-            }
-        }
+//        String search_txt = SearchFiled.getText();
+//        String search_type = (String) searchBox.getSelectedItem();
+//        if (!search_txt.equals("Type here ...")) {
+//            switch (search_type) {
+//                case "ID":
+//                populateTableByType("ID",search_txt);
+//                break;
+//                case "PartName":
+//                populateTableByType("PartName",search_txt);
+//                break;
+//                case "CarType":
+//                populateTableByType("CarType",search_txt);
+//                break;
+//                default:
+//                return;
+//            }
+//        }
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void searchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBoxActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(WholeCarPurchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(WholeCarPurchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(WholeCarPurchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(WholeCarPurchase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new WholeCarPurchase().setVisible(true);
-//            }
-//        });
-//    }
+    private void buyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyBtnActionPerformed
+        Username = "12345";
+        
+        if (carTable.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Select at least one row");
+            return;
+        }
+        
+        DealershipDao dealershipdao = new DealershipDao();
+        Dealership dealership = new Dealership();
+        dealership = dealershipdao.QueryById(carTable.getSelectedRow());
+                
+        int VIN = dealership.getVIN();
+              
+        addBuyInfo = new ConfirmBuying(Username, VIN);
+        addBuyInfo.setVisible(true);
+        // delete delearship row
+        
+        populateResultTable2();
+    }//GEN-LAST:event_buyBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        if (carTable2.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Select at least one order");
+            return;
+        }
+        
+        int result = JOptionPane.showConfirmDialog(null, "Sure to cancel this order?");
+
+        
+        if (result == JOptionPane.OK_OPTION) {
+            int id = Integer.valueOf(carTable2.getValueAt(
+                    carTable2.getSelectedRow(), 1).toString());
+            CarPurchaseDao carPurchaseDao = new CarPurchaseDao();
+            carPurchaseDao.delete(id);
+            populateResultTable2();
+        }   
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        if (carTable2.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Select at least one order");
+            return;
+        }
+        
+        int orderid = Integer.valueOf(carTable2.getValueAt(
+                    carTable2.getSelectedRow(), 1).toString());
+        CarPurchaseDao carPurchaseDao = new CarPurchaseDao();
+        CarPurchase carpurchase = new CarPurchase();
+        carpurchase = carPurchaseDao.QueryByOrder(orderid);
+        
+        addBuyInfo = new ConfirmBuying(carpurchase);
+        addBuyInfo.setVisible(true);
+        
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        populateResultTable2();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField SearchFiled;
+    private javax.swing.JButton buyBtn;
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JTable carTable;
+    private javax.swing.JTable carTable2;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> searchBox;
     private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables

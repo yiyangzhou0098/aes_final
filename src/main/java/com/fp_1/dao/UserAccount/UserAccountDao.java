@@ -28,6 +28,16 @@ public class UserAccountDao {
                      ) > 0;
     }
     
+    public boolean isVaild(String identity,String userna,String userpw) throws SQLException
+    {
+        return !(util.query("select * from UserAccount where UserName=? and UserPassword=? and UserIdentity", 
+                userna,userpw,identity).isBeforeFirst());
+    }
+    
+    public void deletebyName(String name){
+      
+          util.delete("delete from UserAccount where UserName=?", name);
+      }
     public UserAccount QueryById(String username) {
         return _useraccount(util.query("select * from UserAccount where UserName=?", username));
     }
@@ -78,6 +88,7 @@ public class UserAccountDao {
     
         private List<UserAccount> _listuseraccount(ResultSet rs) {
         List<UserAccount> _listuseraccount = new ArrayList<UserAccount>();
+        
         try {
             while (rs.next()) {
                 UserAccount useraccount = new UserAccount();
@@ -98,4 +109,6 @@ public class UserAccountDao {
         }
         return _listuseraccount;
     }
+        
+        
 }
